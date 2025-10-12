@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Allow access to files in the app's private storage -->
+    <external-path
+        name="my_images"
+        path="Android/data/com.Gr8niteout/files/Pictures/" />
+    <!-- Optional: Allow access to all files under app's private storage -->
+    <external-files-path
+        name="external_files"
+        path="." />
+</paths>

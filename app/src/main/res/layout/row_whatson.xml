@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="15dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginTop="15dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/upper_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/listitem_rounded_corner"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/main_head"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/listitem_rounded_corner"
+            android:text="WWFWFWF"
+            android:lineSpacingMultiplier="1.1"
+            android:textColor="#4a4a4a"
+            android:textSize="@dimen/pt77" />
+
+        <TextView
+            android:id="@+id/desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="6dp"
+            android:lineSpacingMultiplier="1.2"
+            android:paddingBottom="20dp"
+            android:text="fgasegeggsegsegeg"
+            android:textColor="#7a7a7a"
+            android:textSize="@dimen/pt53" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/image_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:background="@color/white"
+            android:scaleType="fitXY"
+            android:layout_centerHorizontal="true" />
+
+        <ImageView
+            android:id="@+id/imageViewHolder"
+            android:layout_width="wrap_content"
+            android:layout_height="300dp"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="30dp"
+            android:src="@mipmap/img_placeholder" />
+    </RelativeLayout>
+
+</LinearLayout>

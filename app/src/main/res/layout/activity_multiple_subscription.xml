@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:weightSum="1">
+<!--    <TextView-->
+<!--        android:id="@+id/StatusBar"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:text="Gr8niteOut Plans"-->
+<!--        android:textColor="@color/white"-->
+<!--        android:background="@color/blue"-->
+<!--        android:layout_gravity="center"-->
+<!--        android:gravity="center"-->
+<!--        android:padding="10dp"-->
+<!--        android:textSize="18sp"-->
+<!--        android:layout_weight="0.08"-->
+<!--        />-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_weight="1">
+
+    <LinearLayout
+            android:id="@+id/detailOfSubCard"
+            android:visibility="visible"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/_10sdp"
+            android:background="@color/white"
+            android:layout_margin="@dimen/_10sdp"
+            android:elevation="2dp"
+            android:layout_gravity="center">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_gravity="end"
+            android:gravity="end">
+            <ImageView
+                android:id="@+id/close"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:src="@drawable/close"
+                android:visibility="visible"
+                />
+        </LinearLayout>
+
+
+
+            <!-- Title -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_8sdp"
+                android:fontFamily="@font/anek600"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16ssp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:text="@string/subscription_text" />
+
+            <!-- Benefits Section -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="@dimen/_12sdp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/anek400"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14ssp"
+                    android:drawableStart="@drawable/ic_checkmark"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:gravity="start|center_vertical"
+                    android:paddingBottom="@dimen/_4sdp"
+                    android:text="@string/subscription_text1" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/anek400"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14ssp"
+                    android:drawableStart="@drawable/ic_checkmark"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:gravity="start|center_vertical"
+                    android:paddingBottom="@dimen/_4sdp"
+                    android:text="@string/subscription_text2" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/anek400"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14ssp"
+                    android:drawableStart="@drawable/ic_checkmark"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:gravity="start|center_vertical"
+                    android:paddingBottom="@dimen/_4sdp"
+                    android:text="@string/subscription_text3" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/anek400"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14ssp"
+                    android:drawableStart="@drawable/ic_checkmark"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:gravity="start|center_vertical"
+                    android:paddingBottom="@dimen/_4sdp"
+                    android:text="@string/subscription_text4" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/anek400"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14ssp"
+                    android:drawableStart="@drawable/ic_checkmark"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:gravity="start|center_vertical"
+                    android:paddingBottom="@dimen/_4sdp"
+                    android:text="@string/subscription_text5" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/anek400"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14ssp"
+                    android:drawableStart="@drawable/ic_checkmark"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:gravity="start|center_vertical"
+                    android:paddingBottom="@dimen/_4sdp"
+                    android:text="@string/subscription_text6" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/anek400"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14ssp"
+                    android:drawableStart="@drawable/ic_checkmark"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:gravity="start|center_vertical"
+                    android:paddingBottom="@dimen/_4sdp"
+                    android:text="@string/subscription_text7" />
+            </LinearLayout>
+
+            <!-- Pricing and Trial Info -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/anek600"
+                android:textColor="@color/blue"
+                android:textSize="@dimen/_14ssp"
+                android:gravity="center"
+                android:text="@string/subscription_text8" />
+
+
+
+
+        </LinearLayout>
+
+
+
+    <!-- CardView to hold subscription details -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/subscription_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="0dp"
+        app:cardBackgroundColor="#FFFFFF"
+        android:padding="16dp"
+        android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="start"
+                    android:padding="16dp">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Name"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="#212121" />
+
+                    <TextView
+                        android:id="@+id/userName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="N/A"
+                        android:textSize="14sp"
+                        android:textColor="#757575" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Email"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="#212121" />
+
+                    <TextView
+                        android:id="@+id/userEmail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="N/A"
+                        android:textSize="14sp"
+                        android:textColor="#757575" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Subscription Type"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="#212121" />
+
+                    <TextView
+                        android:id="@+id/tx_Subscription_Type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="N/A"
+                        android:textSize="14sp"
+                        android:textColor="#757575" />
+
+
+                    <TextView
+                        android:id="@+id/tv_subscription_name_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Subscription Plan"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="#212121" />
+
+                    <TextView
+                        android:id="@+id/tv_subscription_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Premium Monthly"
+                        android:textSize="14sp"
+                        android:textColor="#757575" />
+
+                    <!-- Active Status -->
+                    <TextView
+                        android:id="@+id/tv_active_status_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="Status"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="#212121" />
+
+                    <TextView
+                        android:id="@+id/tv_active_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Active"
+                        android:textSize="14sp"
+                        android:textColor="#4CAF50" />
+
+                    <!-- Start Date -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="Start Date"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="#212121" />
+
+                    <TextView
+                        android:id="@+id/tv_start_date_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="N/A"
+                        android:textSize="14sp"
+                        android:textColor="#757575" />
+
+                    <!-- Expiration Date -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="Expiration Date"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="#212121" />
+
+                    <TextView
+                        android:id="@+id/tv_expiration_date_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="N/A"
+                        android:textSize="14sp"
+                        android:textColor="#757575" />
+
+
+
+
+                    <!-- Pricing and Trial Info -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/anek600"
+                        android:textColor="@color/blue"
+                        android:textSize="@dimen/_14ssp"
+                        android:gravity="start"
+                        android:layout_marginTop="@dimen/_30sdp"
+                        android:text="@string/subscription_text8" />
+
+
+
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
+
+
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/explore_subscription_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10ssp"
+        android:background="@color/blue"
+        android:textColor="@color/white"
+        android:text="@string/explore_subscription"/>
+
+</LinearLayout>

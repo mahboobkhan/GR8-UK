@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="20dp"
+    android:layout_marginBottom="15dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginLeft="10dp"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_margin="10dp"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:weightSum="10"
+            android:padding="9dp"
+            android:background="@drawable/listitem_rounded_corner"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="6"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:layout_width="30dp"
+                    android:id="@+id/image_layout"
+                    android:layout_height="30dp">
+                    <com.Gr8niteout.config.RoundImageview
+                        android:layout_width="30dp"
+                        android:id="@+id/user_image"
+                        android:layout_height="30dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:id="@+id/First_Lett"
+                        android:visibility="gone"
+
+                        android:layout_centerInParent="true"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/pt67" />
+                </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:id="@+id/user_name"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textColor="#2e2e2e"
+                    android:singleLine="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="center"
+                    android:textSize="@dimen/pt53"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="4"
+                android:gravity="center|right"
+                android:layout_gravity="center|right"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:id="@+id/days_ago"
+                    android:textColor="#a0a0a0"
+                    android:textSize="@dimen/pt48"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:visibility="visible"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/pubimageView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY" />
+            <ImageView
+                android:id="@+id/imgPlaceHolder"
+                android:layout_width="wrap_content"
+                android:layout_height="211dp"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/img_placeholder"/>
+        </RelativeLayout>
+
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:paddingTop="20dp"
+            android:singleLine="false"
+            android:paddingBottom="20dp"
+            android:paddingRight="15dp"
+            android:paddingLeft="15dp"
+            android:background="@color/white"
+            android:id="@+id/txtDescription"
+            android:textColor="#676767"
+            android:textSize="@dimen/pt48"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:background="@color/white"
+            android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:background="#C5C5C5"
+            android:id="@+id/line"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_height="0.7dp"
+            android:orientation="horizontal" />
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/listitem_rounded_btm_corner"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="17dp"
+                android:layout_marginBottom="17dp"
+                android:layout_marginLeft="15dp"
+                android:id="@+id/share_img"
+                android:onClick="ShareClick"
+                android:src="@mipmap/share_image"/>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/view_comments"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center"
+                    android:paddingLeft="15dp"
+                    android:paddingTop="17dp"
+                    android:paddingRight="15dp"
+                    android:paddingBottom="17dp"
+                    android:text="View comments"
+                    android:textColor="#a0a0a0"
+                    android:textSize="@dimen/pt48" />
+            </RelativeLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

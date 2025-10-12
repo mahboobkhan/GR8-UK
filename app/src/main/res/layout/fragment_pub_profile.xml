@@ -1,0 +1,1111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:context=".PubDashboardScreens.PubFragments.PubProfileFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="@dimen/_10sdp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:fontFamily="@font/anek700"
+            android:text="About Your Premises"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_13ssp" />
+
+        <EditText
+            android:id="@+id/edtPremisesName"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_100sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@drawable/edt_pub_register"
+            android:gravity="top"
+            android:hint="Write Something About Your Premises"
+            android:inputType="textMultiLine"
+            android:textColor="@color/black"
+            android:textColorHint="@color/pub_gray"
+            android:textSize="@dimen/_12ssp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvProfilePicture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/anek700"
+                android:text="Profile Picture"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_13ssp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="@font/anek700"
+                android:text="*"
+                android:textColor="#8b1742"
+                android:textSize="@dimen/_13ssp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_15sdp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_35sdp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/btnUploadProfile"
+                    android:layout_width="@dimen/_70sdp"
+                    android:layout_height="@dimen/_70sdp"
+                    android:background="@drawable/get_started_btn"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="@dimen/_25sdp"
+                        android:layout_height="@dimen/_25sdp"
+                        android:src="@drawable/upload_icon" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:text="Upload"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_12ssp" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:fontFamily="@font/anek400"
+                    android:text="338 X 228 Pixels"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_9ssp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/imgProfile"
+                    android:layout_width="@dimen/_70sdp"
+                    android:layout_height="@dimen/_70sdp"
+                    android:background="@drawable/image_border"/>
+
+                <TextView
+                    android:id="@+id/tvRemoveProfile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:fontFamily="@font/anek400"
+                    android:text="Remove"
+                    android:textColor="#C12121"
+                    android:textSize="@dimen/_10ssp"
+                    android:textStyle="bold"
+                    android:visibility="invisible" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvFeaturedImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/anek700"
+                android:text="Featured Image"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_13ssp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="@font/anek700"
+                android:text="*"
+                android:textColor="#8b1742"
+                android:textSize="@dimen/_13ssp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_15sdp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_35sdp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/btnUploadFeaturedImage"
+                    android:layout_width="@dimen/_70sdp"
+                    android:layout_height="@dimen/_70sdp"
+                    android:background="@drawable/get_started_btn"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="@dimen/_25sdp"
+                        android:layout_height="@dimen/_25sdp"
+                        android:src="@drawable/upload_icon" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:text="Upload"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_12ssp" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:fontFamily="@font/anek400"
+                    android:text="1055 X 410 Pixels"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_9ssp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/imgFeaturedImage"
+                    android:layout_width="@dimen/_70sdp"
+                    android:layout_height="@dimen/_70sdp"
+                    android:background="@drawable/image_border" />
+
+                <TextView
+                    android:id="@+id/tvRemoveFeaturedImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:fontFamily="@font/anek400"
+                    android:text="Remove"
+                    android:textColor="#C12121"
+                    android:textSize="@dimen/_10ssp"
+                    android:textStyle="bold"
+                    android:visibility="invisible" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:fontFamily="@font/anek700"
+            android:text="Other Photos"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_13ssp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:fontFamily="@font/anek400"
+            android:text="Add flair to your listing: include photos of your premises. You can upload up to 5 photos. Please be sure they comply with our photo submission guidelines."
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12ssp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:fontFamily="@font/anek400"
+                android:text="You have uploaded "
+                android:textColor="@color/pub_green"
+                android:textSize="@dimen/_12ssp" />
+
+            <TextView
+                android:id="@+id/imgUploadText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:fontFamily="@font/anek400"
+                android:text="3"
+                android:textColor="@color/pub_green"
+                android:textSize="@dimen/_12ssp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:fontFamily="@font/anek400"
+                android:text=" of up to 4 images for this profile."
+                android:textColor="@color/pub_green"
+                android:textSize="@dimen/_12ssp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvUploadOtherImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:background="@drawable/get_started_btn"
+            android:fontFamily="@font/anek700"
+            android:gravity="center"
+            android:paddingVertical="@dimen/_10sdp"
+            android:text="Upload Other Photos"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12ssp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:fontFamily="@font/anek400"
+            android:text="Selected Images:"
+            android:textColor="@color/pub_green"
+            android:textSize="@dimen/_12ssp" />
+
+        <TextView
+            android:id="@+id/tvNoImageSelected"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/_15sdp"
+            android:layout_gravity="center"
+            android:fontFamily="@font/anek400"
+            android:text="No image selected"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12ssp" />
+
+        <LinearLayout
+            android:id="@+id/selectedImagesLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_2sdp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/imgSelected1"
+                    android:layout_width="@dimen/_65sdp"
+                    android:layout_height="@dimen/_70sdp"
+                    android:background="@drawable/image_border"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tvRemoveSelected1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:fontFamily="@font/anek400"
+                    android:text="Remove"
+                    android:textColor="#C12121"
+                    android:textSize="@dimen/_10ssp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_2sdp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/imgSelected2"
+                    android:layout_width="@dimen/_65sdp"
+                    android:layout_height="@dimen/_70sdp"
+                    android:background="@drawable/image_border"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tvRemoveSelected2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:fontFamily="@font/anek400"
+                    android:text="Remove"
+                    android:textColor="#C12121"
+                    android:textSize="@dimen/_10ssp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_2sdp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/imgSelected3"
+                    android:layout_width="@dimen/_65sdp"
+                    android:layout_height="@dimen/_70sdp"
+                    android:background="@drawable/image_border"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tvRemoveSelected3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:fontFamily="@font/anek400"
+                    android:text="Remove"
+                    android:textColor="#C12121"
+                    android:textSize="@dimen/_10ssp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_marginHorizontal="@dimen/_2sdp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/imgSelected4"
+                    android:layout_width="@dimen/_65sdp"
+                    android:layout_height="@dimen/_70sdp"
+                    android:background="@drawable/image_border"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tvRemoveSelected4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:fontFamily="@font/anek400"
+                    android:text="Remove"
+                    android:textColor="#C12121"
+                    android:textSize="@dimen/_10ssp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/anek400"
+            android:text="Uploaded Images:"
+            android:textColor="@color/pub_green"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:textSize="@dimen/_12ssp" />
+
+        <TextView
+            android:id="@+id/tvNoImageUploaded"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/_15sdp"
+            android:layout_gravity="center"
+            android:fontFamily="@font/anek400"
+            android:text="No image uploaded"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12ssp" />
+
+        <LinearLayout
+            android:id="@+id/uploadedImagesLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_2sdp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/imgUploaded1"
+                    android:layout_width="@dimen/_65sdp"
+                    android:layout_height="@dimen/_70sdp"
+                    android:background="@drawable/image_border"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tvRemoveUploaded1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:fontFamily="@font/anek400"
+                    android:text="Remove"
+                    android:textColor="#C12121"
+                    android:textSize="@dimen/_10ssp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_2sdp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/imgUploaded2"
+                    android:layout_width="@dimen/_65sdp"
+                    android:layout_height="@dimen/_70sdp"
+                    android:background="@drawable/image_border"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tvRemoveUploaded2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:fontFamily="@font/anek400"
+                    android:text="Remove"
+                    android:textColor="#C12121"
+                    android:textSize="@dimen/_10ssp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_2sdp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/imgUploaded3"
+                    android:layout_width="@dimen/_65sdp"
+                    android:layout_height="@dimen/_70sdp"
+                    android:background="@drawable/image_border"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tvRemoveUploaded3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:fontFamily="@font/anek400"
+                    android:text="Remove"
+                    android:textColor="#C12121"
+                    android:textSize="@dimen/_10ssp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_marginHorizontal="@dimen/_2sdp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/imgUploaded4"
+                    android:layout_width="@dimen/_65sdp"
+                    android:layout_height="@dimen/_70sdp"
+                    android:background="@drawable/image_border"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tvRemoveUploaded4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:fontFamily="@font/anek400"
+                    android:text="Remove"
+                    android:textColor="#C12121"
+                    android:textSize="@dimen/_10ssp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:fontFamily="@font/anek700"
+            android:text="Features:"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14ssp" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/anek700"
+                android:text="Live Sports:"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_13ssp" />
+
+            <Spinner
+                android:id="@+id/liveSportsSpinner"
+                android:layout_width="@dimen/_70sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:background="@drawable/dropdown_drawable"
+                android:dropDownWidth="@dimen/_90sdp"
+                android:spinnerMode="dropdown"
+                android:textColor="@color/black"
+                android:theme="@style/Spinner" />
+
+
+        </RelativeLayout>
+
+        <EditText
+            android:id="@+id/edtLiveSports"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_32sdp"
+            android:layout_marginHorizontal="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:background="@drawable/edt_pub_register"
+            android:hint="Live Sports"
+            android:inputType="textCapSentences"
+            android:paddingVertical="@dimen/_1sdp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/pub_gray"
+            android:textSize="@dimen/_12ssp" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/anek700"
+                android:text="Food:"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_13ssp" />
+
+            <Spinner
+                android:id="@+id/foodSpinner"
+                android:layout_width="@dimen/_70sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:background="@drawable/dropdown_drawable"
+                android:dropDownWidth="@dimen/_90sdp"
+                android:spinnerMode="dropdown"
+                android:textColor="@color/black"
+                android:theme="@style/Spinner" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/anek700"
+                android:text="Karaoke:"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_13ssp" />
+
+            <Spinner
+                android:id="@+id/karaokeSpinner"
+                android:layout_width="@dimen/_70sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:background="@drawable/dropdown_drawable"
+                android:dropDownWidth="@dimen/_90sdp"
+                android:spinnerMode="dropdown"
+                android:textColor="@color/black"
+                android:theme="@style/Spinner" />
+
+
+        </RelativeLayout>
+
+        <EditText
+            android:id="@+id/edtKaraoke"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_32sdp"
+            android:layout_marginHorizontal="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:background="@drawable/edt_pub_register"
+            android:hint="Karaoke"
+            android:inputType="textCapSentences"
+            android:paddingVertical="@dimen/_1sdp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/pub_gray"
+            android:textSize="@dimen/_12ssp" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/anek700"
+                android:text="Live Music:"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_13ssp" />
+
+            <Spinner
+                android:id="@+id/liveMusicSpinner"
+                android:layout_width="@dimen/_70sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:background="@drawable/dropdown_drawable"
+                android:dropDownWidth="@dimen/_90sdp"
+                android:spinnerMode="dropdown"
+                android:textColor="@color/black"
+                android:theme="@style/Spinner" />
+
+
+        </RelativeLayout>
+
+        <EditText
+            android:id="@+id/edtLiveMusic"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_32sdp"
+            android:layout_marginHorizontal="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:background="@drawable/edt_pub_register"
+            android:hint="Live Music"
+            android:inputType="textCapSentences"
+            android:paddingVertical="@dimen/_1sdp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/pub_gray"
+            android:textSize="@dimen/_12ssp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:fontFamily="@font/anek700"
+                    android:text="Average Drink Price:"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_13ssp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/anek700"
+                    android:text="*"
+                    android:textColor="#8b1742"
+                    android:textSize="@dimen/_13ssp" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/edtAverageDrinkPrice"
+                android:layout_width="@dimen/_70sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:background="@drawable/edt_pub_register"
+                android:hint="Average Drink Price"
+                android:inputType="numberDecimal"
+                android:paddingVertical="@dimen/_1sdp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/pub_gray"
+                android:textSize="@dimen/_12ssp" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:fontFamily="@font/anek700"
+                    android:text="Door Charge:"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_13ssp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/anek700"
+                    android:text="*"
+                    android:textColor="#8b1742"
+                    android:textSize="@dimen/_13ssp" />
+            </LinearLayout>
+
+            <Spinner
+                android:id="@+id/doorChargeSpinner"
+                android:layout_width="@dimen/_70sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:background="@drawable/dropdown_drawable"
+                android:dropDownWidth="@dimen/_90sdp"
+                android:spinnerMode="dropdown"
+                android:textColor="@color/black"
+                android:theme="@style/Spinner" />
+
+
+        </RelativeLayout>
+
+        <EditText
+            android:id="@+id/edtDoorCharge"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_32sdp"
+            android:layout_marginHorizontal="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:background="@drawable/edt_pub_register"
+            android:hint="Door Charge"
+            android:inputType="numberDecimal"
+            android:paddingVertical="@dimen/_1sdp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/pub_gray"
+            android:textSize="@dimen/_12ssp" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/anek700"
+                android:text="Free Wifi:"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_13ssp" />
+
+            <Spinner
+                android:id="@+id/freeWifiSpinner"
+                android:layout_width="@dimen/_70sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:background="@drawable/dropdown_drawable"
+                android:dropDownWidth="@dimen/_90sdp"
+                android:spinnerMode="dropdown"
+                android:textColor="@color/black"
+                android:theme="@style/Spinner" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/anek700"
+                android:text="Disabled Access:"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_13ssp" />
+
+            <Spinner
+                android:id="@+id/disabledAccessSpinner"
+                android:layout_width="@dimen/_70sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:background="@drawable/dropdown_drawable"
+                android:dropDownWidth="@dimen/_90sdp"
+                android:spinnerMode="dropdown"
+                android:textColor="@color/black"
+                android:theme="@style/Spinner" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/anek700"
+                android:text="Quiz Nights:"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_13ssp" />
+
+            <Spinner
+                android:id="@+id/quizNightsSpinner"
+                android:layout_width="@dimen/_70sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:background="@drawable/dropdown_drawable"
+                android:dropDownWidth="@dimen/_90sdp"
+                android:spinnerMode="dropdown"
+                android:textColor="@color/black"
+                android:theme="@style/Spinner" />
+
+
+        </RelativeLayout>
+
+        <EditText
+            android:id="@+id/edtQuizNights"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_32sdp"
+            android:layout_marginHorizontal="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:background="@drawable/edt_pub_register"
+            android:hint="Quiz Nights"
+            android:inputType="textCapSentences"
+            android:paddingVertical="@dimen/_1sdp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/pub_gray"
+            android:textSize="@dimen/_12ssp" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/anek700"
+                android:text="Real Ale:"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_13ssp" />
+
+            <Spinner
+                android:id="@+id/realAleSpinner"
+                android:layout_width="@dimen/_70sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:background="@drawable/dropdown_drawable"
+                android:dropDownWidth="@dimen/_90sdp"
+                android:spinnerMode="dropdown"
+                android:textColor="@color/black"
+                android:theme="@style/Spinner" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:fontFamily="@font/anek700"
+                    android:text="Minimum Age:"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_13ssp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/anek700"
+                    android:text="*"
+                    android:textColor="#8b1742"
+                    android:textSize="@dimen/_13ssp" />
+            </LinearLayout>
+
+            <Spinner
+                android:id="@+id/minimumAgeSpinner"
+                android:layout_width="@dimen/_70sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:background="@drawable/dropdown_drawable"
+                android:dropDownWidth="@dimen/_90sdp"
+                android:spinnerMode="dropdown"
+                android:textColor="@color/black"
+                android:theme="@style/Spinner" />
+
+
+        </RelativeLayout>
+
+        <EditText
+            android:id="@+id/edtMinimumAge"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_32sdp"
+            android:layout_marginHorizontal="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:background="@drawable/edt_pub_register"
+            android:hint="Minimum Age"
+            android:inputType="number"
+            android:paddingVertical="@dimen/_1sdp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/pub_gray"
+            android:textSize="@dimen/_12ssp" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/anek700"
+                android:text="Are Children Allowed ? :"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_13ssp" />
+
+            <Spinner
+                android:id="@+id/childrenAllowedSpinner"
+                android:layout_width="@dimen/_70sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:background="@drawable/dropdown_drawable"
+                android:dropDownWidth="@dimen/_90sdp"
+                android:spinnerMode="dropdown"
+                android:textColor="@color/black"
+                android:theme="@style/Spinner" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/anek700"
+                android:text="Are Dogs Allowed ? :"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_13ssp" />
+
+            <Spinner
+                android:id="@+id/dogsAllowedSpinner"
+                android:layout_width="@dimen/_70sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:background="@drawable/dropdown_drawable"
+                android:dropDownWidth="@dimen/_90sdp"
+                android:spinnerMode="dropdown"
+                android:textColor="@color/black"
+                android:theme="@style/Spinner" />
+
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tvSave"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_32sdp"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_15sdp"
+            android:background="@drawable/get_started_btn"
+            android:fontFamily="@font/anek700"
+            android:gravity="center"
+            android:paddingHorizontal="@dimen/_35sdp"
+            android:paddingVertical="@dimen/_5sdp"
+            android:text="Save"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12ssp" />
+
+    </LinearLayout>
+
+</ScrollView>

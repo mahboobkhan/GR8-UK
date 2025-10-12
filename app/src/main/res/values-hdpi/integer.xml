@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <integer name="strokeWidth">22</integer>
+    <fraction name="shadow">0.4</fraction>
+</resources>

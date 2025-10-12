@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "576626921560",
+    "project_id": "gr8niteout-fd69c",
+    "storage_bucket": "gr8niteout-fd69c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:576626921560:android:a73af7171e54edb847fa2d",
+        "android_client_info": {
+          "package_name": "com.Gr8niteout"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "576626921560-gsvlk65av8n0l659bovrqf9ta78ksmnl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.Gr8niteout",
+            "certificate_hash": "e7563a1ff0d9e414f0780c908d1a948acdfa5df4"
+          }
+        },
+        {
+          "client_id": "576626921560-qm4ibrknv6a0tgig7bh281naijog1vil.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.Gr8niteout",
+            "certificate_hash": "429ff6c5c8d534af6cdecf1587ea589ff1b4c921"
+          }
+        },
+        {
+          "client_id": "576626921560-lr8oun3lsn7ear3ic0m5103o6topaa7o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCWouLOiEVDaPu3guHMt7m2FBDZSJ4epMk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "576626921560-lr8oun3lsn7ear3ic0m5103o6topaa7o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

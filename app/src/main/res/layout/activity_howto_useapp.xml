@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@mipmap/search_for_pubs"
+    android:id="@+id/how_use_layout"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/allow_access_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/textSkip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:gravity="center"
+        android:padding="30dp"
+        android:visibility="gone"
+        android:onClick="OnSkip"
+        android:layout_alignParentRight="true"
+        android:text="SKIP"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/pt48" />
+
+    <Button
+        android:id="@+id/btnNext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="45dp"
+        android:background="@mipmap/next"
+        android:onClick="Next" />
+</RelativeLayout>

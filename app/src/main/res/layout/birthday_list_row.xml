@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/listcolor"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.25"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:gravity="center_horizontal">
+
+            <RelativeLayout
+                android:layout_width="55dp"
+                android:id="@+id/image_layout"
+                android:layout_height="55dp">
+                <ImageView
+                    android:layout_width="55dp"
+                    android:id="@+id/user_image"
+                    android:layout_height="55dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:id="@+id/First_Lett"
+                    android:layout_centerInParent="true"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/pt72" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="12dp"
+            android:paddingBottom="15dp"
+            android:gravity="center_vertical"
+            android:layout_gravity="center"
+            android:layout_weight="0.75">
+
+                <TextView
+                    android:id="@+id/txtName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text=""
+                    android:textColor="@color/list_name"
+                    android:textSize="@dimen/pt67"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtStatic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="bought you a drink"
+                    android:visibility="gone"
+                    android:textColor="@color/list_name"
+                    android:textSize="@dimen/pt64" />
+
+                <TextView
+                    android:id="@+id/days_ago"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:text=""
+                    android:textColor="@color/day_ago"
+                    android:textSize="@dimen/pt53" />
+            </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

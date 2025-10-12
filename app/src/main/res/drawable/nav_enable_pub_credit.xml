@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/pub_credit_blue"
+        android:state_pressed="true"/> <!-- pressed -->
+    <item android:drawable="@drawable/pub_credit_blue"
+        android:state_activated="true"/> <!-- activite -->
+    <item
+        android:drawable="@drawable/enable_pub_credit" /> <!-- default -->
+</selector>

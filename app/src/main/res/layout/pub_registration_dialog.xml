@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:paddingHorizontal="@dimen/_15sdp"
+    android:background="@drawable/pub_registration_dialog_bg">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:gravity="right">
+
+        <ImageView
+            android:id="@+id/closeIconRegDialog"
+            android:layout_width="@dimen/_20ssp"
+            android:layout_height="@dimen/_20ssp"
+            android:layout_marginTop="@dimen/padding20"
+            android:src="@drawable/close" />
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_100sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:src="@drawable/done_icon"/>
+
+    <TextView
+        android:id="@+id/title1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Congratulations"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:fontFamily="@font/inter600"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_17ssp"/>
+
+    <TextView
+        android:id="@+id/title2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="You have successfully registered with Gr8niteout."
+        android:layout_marginTop="@dimen/_5sdp"
+        android:fontFamily="@font/inter600"
+        android:textColor="@color/pub_green"
+        android:gravity="center"
+        android:textSize="@dimen/_14ssp"/>
+
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="We've sent an account activation email to your registered email address. To activate your account, please just click on the link in the email. You'll then be able to log in to Gr8NiteOut and visit your dashboard.If your activation email hasn't arrived within an hour, please contact the team for technical support. Don't forget to check your junk/spam folder."
+        android:layout_marginTop="@dimen/_5sdp"
+        android:fontFamily="@font/anek400"
+        android:textColor="@color/black"
+        android:gravity="center"
+        android:layout_marginBottom="@dimen/_30sdp"
+        android:textSize="@dimen/_13ssp"/>
+
+    <TextView
+        android:id="@+id/tvConnectStripe"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_38sdp"
+        android:text="Connect Stripe Account"
+        android:layout_marginBottom="@dimen/_25sdp"
+        android:background="@drawable/get_started_btn"
+        android:layout_marginHorizontal="@dimen/_15sdp"
+        android:gravity="center"
+        android:textSize="@dimen/_14ssp"
+        android:fontFamily="@font/anek600"
+        android:textColor="@color/white"/>
+
+</LinearLayout>

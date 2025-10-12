@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/lineclr"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context=".RegisterPubScreens.PersonalInformationActivity2">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:src="@mipmap/logo" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:background="#0C54A4"
+        android:fontFamily="@font/anek700"
+        android:gravity="center_vertical"
+        android:paddingVertical="@dimen/_13sdp"
+        android:paddingStart="@dimen/_10sdp"
+        android:text="Were We Recommend To You?"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_14ssp" />
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="@dimen/_10sdp"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/layout1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:fontFamily="@font/anek700"
+                    android:text="Full Name"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_13ssp" />
+
+                <EditText
+                    android:id="@+id/edtFullName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:background="@drawable/edt_pub_register"
+                    android:hint="Full Name"
+                    android:inputType="textCapSentences"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/pub_gray"
+                    android:textSize="@dimen/_12ssp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:fontFamily="@font/anek700"
+                    android:text="Mobile Number"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_13ssp" />
+
+                <EditText
+                    android:id="@+id/edtMobileNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:background="@drawable/edt_pub_register"
+                    android:hint="Mobile Number"
+                    android:inputType="number"
+                    android:maxLength="15"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/pub_gray"
+                    android:textSize="@dimen/_12ssp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:fontFamily="@font/anek700"
+                    android:text="Confirm Number"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_13ssp" />
+
+                <EditText
+                    android:id="@+id/edtConfirmMobileNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:background="@drawable/edt_pub_register"
+                    android:hint="Confirm Number"
+                    android:inputType="number"
+                    android:maxLength="15"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/pub_gray"
+                    android:textSize="@dimen/_12ssp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_below="@id/layout1"
+                android:layout_marginTop="@dimen/_180sdp">
+
+                <TextView
+                    android:id="@+id/btnBack"
+                    android:layout_width="@dimen/_120sdp"
+                    android:layout_height="@dimen/_38sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:layout_marginBottom="@dimen/_7sdp"
+                    android:background="@drawable/pub_back_btn"
+                    android:fontFamily="@font/anek700"
+                    android:gravity="center"
+                    android:text="Back"
+                    android:textColor="@color/pub_green"
+                    android:textSize="@dimen/_14ssp" />
+
+                <TextView
+                    android:id="@+id/btnNext"
+                    android:layout_width="@dimen/_120sdp"
+                    android:layout_height="@dimen/_38sdp"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginBottom="@dimen/_7sdp"
+                    android:background="@drawable/get_started_btn"
+                    android:fontFamily="@font/anek700"
+                    android:gravity="center"
+                    android:text="Next"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_14ssp" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/padding_medium"
+    android:background="@android:color/transparent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/listitem_rounded_corner">
+
+        <ImageView
+            android:id="@+id/galleryImage"
+            android:layout_width="fill_parent"
+            android:layout_height="228dp"
+            android:scaleType="centerCrop" />
+
+        <ImageView
+            android:id="@+id/galleryImagePlaceHolder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@mipmap/img_placeholder" />
+
+        <ImageView
+            android:id="@+id/imageCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:padding="@dimen/padding_medium"
+            android:src="@mipmap/cancel_black_button" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/captiontext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/listitem_rounded_btm_corner"
+        android:clickable="false"
+        android:focusable="false"
+        android:hint="Caption this image"
+        android:padding="@dimen/pt48"
+        android:textColor="#a0a0a0"
+        android:textSize="@dimen/pt53" />
+
+</LinearLayout>

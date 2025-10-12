@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/home_hover"
+        android:state_pressed="true"/> <!-- pressed -->
+    <item android:drawable="@drawable/home_hover"
+        android:state_activated="true"/> <!-- activite -->
+    <item
+        android:drawable="@drawable/home"
+        android:color="@color/gray"/> <!-- default -->
+</selector>

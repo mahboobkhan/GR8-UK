@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_filter"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.Gr8niteout.search.FilterActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary">
+
+            <TextView
+                android:id="@+id/txtTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="@dimen/pt67" />
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.9"
+        android:background="#F8F8F8">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtPubFeatures"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:text="Pub Features"
+                android:textColor="#a0a0a0"
+                android:textSize="@dimen/pt53" />
+
+            <LinearLayout
+                android:id="@+id/layoutFeatures"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"></LinearLayout>
+
+            <TextView
+                android:id="@+id/txtShowall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/linear_shadow"
+                android:paddingBottom="20dp"
+                android:paddingLeft="20dp"
+                android:paddingTop="20dp"
+                android:text="Show all"
+                android:gravity="center_vertical"
+                android:textColor="@color/parrot"
+                android:textSize="@dimen/pt48" />
+
+            <TextView
+                android:id="@+id/txtSortBy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="12dp"
+                android:text="Sort by"
+                android:textColor="@color/features"
+                android:textSize="@dimen/pt53" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/linear_shadow"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <LinearLayout
+                    android:id="@+id/layoutNewest"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.15"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:gravity="center">
+                <TextView
+                    android:id="@+id/txtNewest"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.15"
+                    android:gravity="center"
+                    android:text="Newest"
+                    android:textColor="@color/sort"
+                    android:textSize="@dimen/pt42" />
+                </LinearLayout>
+                <TextView
+                    android:layout_width="1dp"
+                    android:layout_height="13dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_gravity="center"
+                    android:background="@color/linecolor" />
+                <LinearLayout
+                    android:id="@+id/layoutDis"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.15"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:gravity="center">
+                <TextView
+                    android:id="@+id/txtDistance"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.20"
+                    android:gravity="center"
+                    android:text="Distance"
+                    android:textColor="@color/sort"
+                    android:textSize="@dimen/pt42" />
+</LinearLayout>
+                <TextView
+                    android:layout_width="1dp"
+                    android:layout_height="13dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_gravity="center"
+                    android:background="@color/linecolor" />
+                <LinearLayout
+                    android:id="@+id/layoutDri"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.15"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:gravity="center">
+                <TextView
+                    android:id="@+id/txtPrice"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.20"
+                    android:gravity="center"
+                    android:text="Drink Price"
+                    android:textColor="@color/sort"
+                    android:textSize="@dimen/pt42" />
+</LinearLayout>
+                <TextView
+                    android:layout_width="1dp"
+                    android:layout_height="13dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_gravity="center"
+                    android:background="@color/linecolor" />
+                <LinearLayout
+                    android:id="@+id/layoutRating"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.15"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:gravity="center">
+                <TextView
+                    android:id="@+id/txtRating"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.15"
+                    android:gravity="center"
+                    android:text="Rating"
+                    android:textColor="@color/sort"
+                    android:textSize="@dimen/pt42" />
+                    </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txtOpeningTImes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="12dp"
+                android:text="Opening Times"
+                android:textColor="#a0a0a0"
+                android:textSize="@dimen/pt53" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/txtDay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="5dp"
+                    android:text="Day"
+                    android:textColor="@color/mgray"
+                    android:textSize="@dimen/pt48" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="10dp">
+
+                    <TextView
+                        android:id="@+id/txtMonday"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="8dp"
+                        android:layout_weight="0.30"
+                        android:background="@drawable/square_edit_text"
+                        android:gravity="center"
+                        android:paddingBottom="6dp"
+                        android:paddingTop="6dp"
+                        android:clickable="true"
+                        android:focusableInTouchMode="true"
+                        android:paddingLeft="2dp"
+                        android:paddingRight="2dp"
+                        android:text="Monday"
+                        android:textColor="@color/linecolor"
+                        android:textSize="@dimen/pt45" />
+
+
+                    <TextView
+                        android:id="@+id/txtTue"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="8dp"
+                        android:layout_weight="0.30"
+                        android:background="@drawable/square_edit_text"
+                        android:gravity="center"
+                        android:paddingBottom="6dp"
+                        android:paddingTop="6dp"
+                        android:clickable="true"
+                        android:focusableInTouchMode="true"
+                        android:paddingLeft="2dp"
+                        android:paddingRight="2dp"
+                        android:text="Tuesday"
+                        android:textColor="@color/linecolor"
+                        android:textSize="@dimen/pt45" />
+
+                    <TextView
+                        android:id="@+id/txtWed"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="8dp"
+                        android:layout_weight="0.30"
+                        android:background="@drawable/square_edit_text"
+                        android:gravity="center"
+                        android:paddingBottom="6dp"
+                        android:clickable="true"
+                        android:focusableInTouchMode="true"
+                        android:paddingTop="6dp"
+                        android:paddingLeft="2dp"
+                        android:paddingRight="2dp"
+                        android:text="Wednesday"
+                        android:textColor="@color/linecolor"
+                        android:textSize="@dimen/pt45" />
+
+                    <TextView
+                        android:id="@+id/txtThur"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.30"
+                        android:background="@drawable/square_edit_text"
+                        android:gravity="center"
+                        android:paddingBottom="6dp"
+                        android:clickable="true"
+                        android:focusableInTouchMode="true"
+                        android:paddingTop="6dp"
+                        android:paddingLeft="2dp"
+                        android:paddingRight="2dp"
+                        android:text="Thursday"
+                        android:textColor="@color/linecolor"
+                        android:textSize="@dimen/pt45" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="7dp">
+
+                    <TextView
+                        android:id="@+id/txtFri"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="8dp"
+                        android:layout_weight="0.27"
+                        android:background="@drawable/square_edit_text"
+                        android:gravity="center"
+                        android:paddingBottom="6dp"
+                        android:paddingTop="6dp"
+                        android:clickable="true"
+                        android:paddingLeft="2dp"
+                        android:paddingRight="2dp"
+                        android:text="Friday"
+                        android:textColor="@color/linecolor"
+                        android:textSize="@dimen/pt45" />
+
+                    <TextView
+                        android:id="@+id/txtSat"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="8dp"
+                        android:layout_weight="0.27"
+                        android:background="@drawable/square_edit_text"
+                        android:gravity="center"
+                        android:paddingBottom="6dp"
+                        android:paddingTop="6dp"
+                        android:paddingLeft="2dp"
+                        android:clickable="true"
+                        android:focusableInTouchMode="true"
+                        android:paddingRight="2dp"
+                        android:text="Saturday"
+                        android:textColor="@color/linecolor"
+                        android:textSize="@dimen/pt45" />
+
+                    <TextView
+                        android:id="@+id/txtSun"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="8dp"
+                        android:layout_weight="0.27"
+                        android:background="@drawable/square_edit_text"
+                        android:gravity="center"
+                        android:paddingBottom="6dp"
+                        android:paddingTop="6dp"
+                        android:clickable="true"
+                        android:focusableInTouchMode="true"
+                        android:paddingLeft="2dp"
+                        android:paddingRight="2dp"
+                        android:text="Sunday"
+                        android:textColor="@color/linecolor"
+                        android:textSize="@dimen/pt45" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.25"
+                        android:background="@drawable/square_edit_text"
+                        android:gravity="center"
+                        android:paddingBottom="7dp"
+                        android:paddingTop="7dp"
+                        android:text="Thursday"
+                        android:textColor="@color/grey"
+                        android:visibility="invisible" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/txtTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="10dp"
+                    android:text="Time"
+                    android:textColor="@color/mgray"
+                    android:textSize="@dimen/pt48" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp">
+
+                    <TextView
+                        android:id="@+id/textMin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:paddingLeft="5dp"
+                        android:text="12 noon"
+                        android:textColor="@color/parrot"
+                        android:textSize="@dimen/pt48" />
+
+                    <TextView
+                        android:id="@+id/textMax"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="5dp"
+                        android:paddingRight="7dp"
+                        android:text="12 pm"
+                        android:textColor="@color/parrot"
+                        android:textSize="@dimen/pt48" />
+                </RelativeLayout>
+
+<!--                <com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar-->
+<!--                    android:id="@+id/rangeSeekbar"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    app:bar_color="#b0afaf"-->
+<!--                    app:bar_highlight_color="#73c642"-->
+<!--                    app:data_type="_integer"-->
+<!--                    app:left_thumb_image="@mipmap/bar_green_circle"-->
+<!--                    app:right_thumb_image="@mipmap/bar_green_circle"-->
+<!--                    app:gap="1"-->
+<!--                    app:left_thumb_color="#73c642"-->
+<!--                    app:left_thumb_color_pressed="#73c642"-->
+<!--                    app:max_value="24"-->
+<!--                    app:min_value="0"-->
+<!--                    app:right_thumb_color="#73c642"-->
+<!--                    app:right_thumb_color_pressed="#73c642" />-->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="15dp"
+                    android:orientation="vertical">
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btnPubs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/parrot"
+        android:gravity="center"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="@dimen/pt48"
+        android:visibility="gone" />
+</LinearLayout>

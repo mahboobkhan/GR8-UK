@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:id="@+id/main_layout"
+        android:visibility="gone"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
+
+        <TextView
+            android:id="@+id/no_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="gesegsegse"
+            android:textSize="18sp"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/not_login_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="visible"
+        android:background="@color/white"
+        android:weightSum="10">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:visibility="visible"
+    android:layout_weight="0.1"></LinearLayout>
+
+        <ImageView
+            android:id="@+id/drink_image"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_weight="6"
+            android:src="@mipmap/cupcake" />
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1.5">
+
+            <TextView
+                android:id="@+id/textStatic_notlogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding10"
+                android:gravity="center"
+                android:lines="2"
+                android:lineSpacingMultiplier="1.2"
+                android:text="Log in with your Facebook account\n to see your friend's birthdays"
+                android:textColor="#626262"
+                android:textSize="@dimen/pt61"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/textStatic_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding20"
+                android:gravity="center"
+                android:layout_centerInParent="true"
+                android:lines="2"
+                android:lineSpacingMultiplier="1.2"
+                android:text="No Birthdays yet!\nInvite your friends to use Gr8niteout"
+                android:textColor="#626262"
+                android:textSize="@dimen/pt67"
+                android:visibility="visible" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_weight="1.5">
+
+            <ImageView
+                android:id="@+id/btn_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="@dimen/padding10"
+                android:src="@mipmap/login"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/share_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="@mipmap/share_this_app"
+                android:layout_marginTop="@dimen/padding10"
+                android:inputType="textAutoCorrect"
+                android:visibility="visible" />
+        </RelativeLayout>
+
+    </LinearLayout>
+</LinearLayout>

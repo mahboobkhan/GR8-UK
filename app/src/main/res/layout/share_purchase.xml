@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="10">
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:layout_weight="6.2"-->
+<!--        android:background="@color/white"-->
+<!--        android:orientation="vertical">-->
+
+<!--        <RelativeLayout-->
+<!--            android:id="@+id/layoutClose"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginLeft="15dp"-->
+<!--            android:layout_marginTop="17dp"-->
+<!--            android:background="@mipmap/close_button"></RelativeLayout>-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/txtShare"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:gravity="center"-->
+<!--            android:lineSpacingMultiplier="0.85"-->
+<!--            android:layout_marginTop="15dp"-->
+<!--            android:text="Thanks for using Gr8niteout"-->
+<!--            android:textColor="#6e6e6e"-->
+<!--            android:textSize="38sp" />-->
+
+<!--        <ImageView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:layout_marginTop="22dp"-->
+<!--            android:src="@mipmap/share_graphic" />-->
+
+<!--    </LinearLayout>-->
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:layout_weight="3.8"-->
+<!--        android:background="#F7F7F7"-->
+<!--        android:orientation="vertical"-->
+<!--        android:weightSum="10">-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/txtPurchase"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:layout_weight="6"-->
+<!--            android:lineSpacingMultiplier="1.1"-->
+<!--            android:gravity="center"-->
+<!--            android:text="Your purchase was successful,\n look out for an email with your\ntransaction details."-->
+<!--            android:textColor="#8c8c8c"-->
+<!--            android:textSize="@dimen/pt81" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/buyAnotherDrinkBtn"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:text="Buy Another Drink!"-->
+<!--            android:gravity="center"-->
+<!--            android:background="@drawable/buy_another_drink_bg"-->
+<!--            android:paddingTop="12dp"-->
+<!--            android:paddingBottom="12dp"-->
+<!--            android:textSize="16sp"-->
+<!--            android:textColor="@android:color/white"-->
+<!--            android:textStyle="bold"-->
+<!--            android:paddingStart="50dp"-->
+<!--            android:paddingEnd="50dp"-->
+<!--            />-->
+
+<!--    </LinearLayout>-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="8.5"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/layoutClose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="17dp"
+            android:background="@mipmap/close_button" />
+
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginTop="22dp"
+            android:src="@drawable/thanks_image" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.5"
+        android:background="#F7F7F7"
+        android:orientation="vertical"
+        android:weightSum="10">
+
+        <TextView
+            android:id="@+id/buyAnotherDrinkBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Buy Another Drink!"
+            android:gravity="center"
+            android:background="@drawable/buy_another_drink_bg"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:textSize="16sp"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:paddingStart="50dp"
+            android:paddingEnd="50dp"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_search"
+        android:orderInCategory="100"
+        android:icon="@mipmap/search"
+        android:title="Share"
+        android:visible="false"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_transaction_history"
+        android:orderInCategory="100"
+        android:icon="@drawable/baseline_history_24"
+        android:title="Transaction History"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_setting"
+        android:icon="@mipmap/setting"
+        android:orderInCategory="100"
+        android:title="Settings"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_share"
+        android:icon="@mipmap/share"
+        android:orderInCategory="100"
+        android:title="Share"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_search_white"
+        android:icon="@mipmap/search_white"
+        android:orderInCategory="100"
+        android:title="Search"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_cancel"
+        android:icon="@mipmap/close"
+        android:orderInCategory="100"
+        android:title="Cancel"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_filter"
+        android:icon="@mipmap/search_filter"
+        android:orderInCategory="100"
+        android:title="Filter"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_reset"
+        android:orderInCategory="100"
+        android:title="Reset"
+        app:showAsAction="ifRoom" />
+
+
+</menu>

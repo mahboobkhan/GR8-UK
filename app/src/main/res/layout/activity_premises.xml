@@ -1,0 +1,782 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/lineclr"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context=".RegisterPubScreens.PremisesActivity">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:src="@mipmap/logo" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:background="#0C54A4"
+        android:fontFamily="@font/anek700"
+        android:gravity="center_vertical"
+        android:paddingVertical="@dimen/_13sdp"
+        android:paddingStart="@dimen/_10sdp"
+        android:text="Tell Us About Your Premises"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_14ssp" />
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        android:paddingHorizontal="@dimen/_10sdp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:fontFamily="@font/anek700"
+                    android:text="Premises Name"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_13ssp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:fontFamily="@font/anek700"
+                    android:text="*"
+                    android:textColor="#8b1742"
+                    android:textSize="@dimen/_13ssp" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/edtPremisesName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/edt_pub_register"
+                android:hint="Premises Name"
+                android:inputType="textCapSentences"
+                android:textColor="@color/black"
+                android:textColorHint="@color/pub_gray"
+                android:textSize="@dimen/_12ssp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/anek700"
+                android:text="Premises Type"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_13ssp" />
+
+            <Spinner
+                android:id="@+id/premisesTypeSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_38sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/dropdown_drawable"
+                android:spinnerMode="dropdown"
+                android:textColor="@color/black"
+                android:theme="@style/Spinner" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/anek700"
+                android:text="Currency Preference"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_13ssp" />
+
+            <Spinner
+                android:id="@+id/currencyPreferenceSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_38sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/dropdown_drawable"
+                android:spinnerMode="dropdown"
+                android:textColor="@color/black"
+                android:theme="@style/Spinner" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:fontFamily="@font/anek700"
+                    android:text="Telephone"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_13ssp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:fontFamily="@font/anek700"
+                    android:text="*"
+                    android:textColor="#8b1742"
+                    android:textSize="@dimen/_13ssp" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/edtTelephone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/edt_pub_register"
+                android:hint="Telephone"
+                android:inputType="number"
+                android:maxLength="15"
+                android:textColor="@color/black"
+                android:textColorHint="@color/pub_gray"
+                android:textSize="@dimen/_12ssp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:fontFamily="@font/anek700"
+                    android:text="Nearest Station"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_13ssp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:fontFamily="@font/anek700"
+                    android:text="*"
+                    android:textColor="#8b1742"
+                    android:textSize="@dimen/_13ssp" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/edtNearestStation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/edt_pub_register"
+                android:hint="Nearest Station"
+                android:inputType="textCapSentences"
+                android:textColor="@color/black"
+                android:textColorHint="@color/pub_gray"
+                android:textSize="@dimen/_12ssp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/anek700"
+                android:text="Post Code"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_13ssp" />
+
+            <EditText
+                android:id="@+id/edtPostCode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/edt_pub_register"
+                android:hint="Post Code"
+                android:maxLength="15"
+                android:inputType="text"
+                android:textColor="@color/black"
+                android:textColorHint="@color/pub_gray"
+                android:textSize="@dimen/_12ssp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:fontFamily="@font/anek700"
+                    android:text="Address Line 1"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_13ssp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:fontFamily="@font/anek700"
+                    android:text="*"
+                    android:textColor="#8b1742"
+                    android:textSize="@dimen/_13ssp" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/edtAddressLine1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/edt_pub_register"
+                android:hint="Address Line 1"
+                android:inputType="textCapSentences"
+                android:textColor="@color/black"
+                android:textColorHint="@color/pub_gray"
+                android:textSize="@dimen/_12ssp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/anek700"
+                android:text="Address Line 2"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_13ssp" />
+
+            <EditText
+                android:id="@+id/edtAddressLine2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/edt_pub_register"
+                android:hint="Address Line 2"
+                android:inputType="textCapSentences"
+                android:textColor="@color/black"
+                android:textColorHint="@color/pub_gray"
+                android:textSize="@dimen/_12ssp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:fontFamily="@font/anek700"
+                    android:text="Town/City"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_13ssp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:fontFamily="@font/anek700"
+                    android:text="*"
+                    android:textColor="#8b1742"
+                    android:textSize="@dimen/_13ssp" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/edtTownCity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/edt_pub_register"
+                android:hint="Town/City"
+                android:inputType="textCapSentences"
+                android:textColor="@color/black"
+                android:textColorHint="@color/pub_gray"
+                android:textSize="@dimen/_12ssp" />
+
+            <TextView
+                android:id="@+id/tvCountry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/anek700"
+                android:text="Country"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_13ssp" />
+
+            <Spinner
+                android:id="@+id/countrySpinner"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_38sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/dropdown_drawable"
+                android:spinnerMode="dropdown"
+                android:textColor="@color/black"
+                android:theme="@style/Spinner" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tvCountryState"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:fontFamily="@font/anek700"
+                    android:text="County/State"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_13ssp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:fontFamily="@font/anek700"
+                    android:text="*"
+                    android:textColor="#8b1742"
+                    android:textSize="@dimen/_13ssp" />
+            </LinearLayout>
+
+            <Spinner
+                android:id="@+id/countryStateSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_38sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/dropdown_drawable"
+                android:spinnerMode="dropdown"
+                android:textColor="@color/black"
+                android:theme="@style/Spinner" />
+
+            <EditText
+                android:id="@+id/edtCountryState"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/edt_pub_register"
+                android:hint="Country/State"
+                android:inputType="textCapSentences"
+                android:textColor="@color/black"
+                android:textColorHint="@color/pub_gray"
+                android:textSize="@dimen/_12ssp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/anek700"
+                android:text="Opening Hours"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_13ssp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="@font/anek700"
+                android:layout_gravity="end"
+                android:text="Closed"
+                android:layout_marginEnd="@dimen/_1sdp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12ssp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/anek700"
+                    android:text="Mon:"
+                    android:layout_weight="1"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_3sdp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_11ssp" />
+
+                <Spinner
+                    android:id="@+id/monStartSpinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_30sdp"
+                    android:background="@drawable/dropdown_drawable"
+                    android:spinnerMode="dropdown"
+                    android:layout_weight="4"
+                    android:dropDownWidth="@dimen/_110sdp"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:layout_marginEnd="@dimen/_3sdp"
+                    android:textColor="@color/black"
+                    android:theme="@style/Spinner"/>
+
+                <Spinner
+                    android:id="@+id/monEndSpinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_30sdp"
+                    android:background="@drawable/dropdown_drawable"
+                    android:spinnerMode="dropdown"
+                    android:dropDownWidth="@dimen/_110sdp"
+                    android:layout_weight="4"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:textColor="@color/black"
+                    android:theme="@style/Spinner" />
+
+                <CheckBox
+                    android:id="@+id/monCheckBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_weight="0.5"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/anek700"
+                    android:text="Tue:"
+                    android:layout_weight="1"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_3sdp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_11ssp" />
+
+                <Spinner
+                    android:id="@+id/tueStartSpinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_30sdp"
+                    android:background="@drawable/dropdown_drawable"
+                    android:dropDownWidth="@dimen/_110sdp"
+                    android:spinnerMode="dropdown"
+                    android:layout_weight="4"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:layout_marginEnd="@dimen/_3sdp"
+                    android:textColor="@color/black"
+                    android:theme="@style/Spinner" />
+
+                <Spinner
+                    android:id="@+id/tueEndSpinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_30sdp"
+                    android:background="@drawable/dropdown_drawable"
+                    android:dropDownWidth="@dimen/_110sdp"
+                    android:spinnerMode="dropdown"
+                    android:layout_weight="4"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:textColor="@color/black"
+                    android:theme="@style/Spinner" />
+
+                <CheckBox
+                    android:id="@+id/tueCheckBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_weight="0.5"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/anek700"
+                    android:text="Wed:"
+                    android:layout_weight="1"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_3sdp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_11ssp" />
+
+                <Spinner
+                    android:id="@+id/wedStartSpinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_30sdp"
+                    android:background="@drawable/dropdown_drawable"
+                    android:dropDownWidth="@dimen/_110sdp"
+                    android:spinnerMode="dropdown"
+                    android:layout_weight="2"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:layout_marginEnd="@dimen/_3sdp"
+                    android:textColor="@color/black"
+                    android:theme="@style/Spinner" />
+
+                <Spinner
+                    android:id="@+id/wedEndSpinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_30sdp"
+                    android:background="@drawable/dropdown_drawable"
+                    android:dropDownWidth="@dimen/_110sdp"
+                    android:spinnerMode="dropdown"
+                    android:layout_weight="2"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:textColor="@color/black"
+                    android:theme="@style/Spinner" />
+
+                <CheckBox
+                    android:id="@+id/wedCheckBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_weight="0.5"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/anek700"
+                    android:text="Thu:"
+                    android:layout_weight="1"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_3sdp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_11ssp" />
+
+                <Spinner
+                    android:id="@+id/thuStartSpinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_30sdp"
+                    android:background="@drawable/dropdown_drawable"
+                    android:dropDownWidth="@dimen/_110sdp"
+                    android:spinnerMode="dropdown"
+                    android:layout_weight="3"
+                    android:layout_marginEnd="@dimen/_3sdp"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:textColor="@color/black"
+                    android:theme="@style/Spinner" />
+
+                <Spinner
+                    android:id="@+id/thuEndSpinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_30sdp"
+                    android:background="@drawable/dropdown_drawable"
+                    android:dropDownWidth="@dimen/_110sdp"
+                    android:spinnerMode="dropdown"
+                    android:layout_weight="3"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:textColor="@color/black"
+                    android:theme="@style/Spinner" />
+
+                <CheckBox
+                    android:id="@+id/thuCheckBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_weight="0.5"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/anek700"
+                    android:text="Fri:"
+                    android:layout_weight="1"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_3sdp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_11ssp" />
+
+                <Spinner
+                    android:id="@+id/friStartSpinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:background="@drawable/dropdown_drawable"
+                    android:dropDownWidth="@dimen/_110sdp"
+                    android:spinnerMode="dropdown"
+                    android:layout_weight="4"
+                    android:layout_marginEnd="@dimen/_3sdp"
+                    android:textColor="@color/black"
+                    android:theme="@style/Spinner" />
+
+                <Spinner
+                    android:id="@+id/friEndSpinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_30sdp"
+                    android:background="@drawable/dropdown_drawable"
+                    android:dropDownWidth="@dimen/_110sdp"
+                    android:spinnerMode="dropdown"
+                    android:layout_weight="4"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:textColor="@color/black"
+                    android:theme="@style/Spinner" />
+
+                <CheckBox
+                    android:id="@+id/friCheckBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_weight="0.5"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/anek700"
+                    android:text="Sat:"
+                    android:layout_weight="1"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_3sdp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_11ssp" />
+
+                <Spinner
+                    android:id="@+id/satStartSpinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_30sdp"
+                    android:background="@drawable/dropdown_drawable"
+                    android:dropDownWidth="@dimen/_110sdp"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:spinnerMode="dropdown"
+                    android:layout_weight="4"
+                    android:layout_marginEnd="@dimen/_3sdp"
+                    android:textColor="@color/black"
+                    android:theme="@style/Spinner" />
+
+                <Spinner
+                    android:id="@+id/satEndSpinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_30sdp"
+                    android:background="@drawable/dropdown_drawable"
+                    android:dropDownWidth="@dimen/_110sdp"
+                    android:spinnerMode="dropdown"
+                    android:layout_weight="4"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:textColor="@color/black"
+                    android:theme="@style/Spinner" />
+
+                <CheckBox
+                    android:id="@+id/satCheckBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_weight="0.5"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/anek700"
+                    android:text="Sun:"
+                    android:layout_weight="1"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_3sdp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_11ssp" />
+
+                <Spinner
+                    android:id="@+id/sunStartSpinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_30sdp"
+                    android:background="@drawable/dropdown_drawable"
+                    android:dropDownWidth="@dimen/_110sdp"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:spinnerMode="dropdown"
+                    android:layout_weight="4"
+                    android:layout_marginEnd="@dimen/_3sdp"
+                    android:textColor="@color/black"
+                    android:theme="@style/Spinner" />
+
+                <Spinner
+                    android:id="@+id/sunEndSpinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_30sdp"
+                    android:background="@drawable/dropdown_drawable"
+                    android:dropDownWidth="@dimen/_110sdp"
+                    android:spinnerMode="dropdown"
+                    android:layout_weight="4"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:textColor="@color/black"
+                    android:theme="@style/Spinner" />
+
+                <CheckBox
+                    android:id="@+id/sunCheckBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_weight="0.5"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:gravity="center_horizontal">
+
+                <TextView
+                    android:id="@+id/btnBack"
+                    android:layout_width="@dimen/_120sdp"
+                    android:layout_height="@dimen/_38sdp"
+                    android:layout_marginBottom="@dimen/_7sdp"
+                    android:fontFamily="@font/anek700"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:textSize="@dimen/_14ssp"
+                    android:text="Back"
+                    android:gravity="center"
+                    android:background="@drawable/pub_back_btn"
+                    android:textColor="@color/pub_green" />
+
+                <TextView
+                    android:id="@+id/btnNext"
+                    android:layout_width="@dimen/_120sdp"
+                    android:layout_height="@dimen/_38sdp"
+                    android:gravity="center"
+                    android:layout_marginBottom="@dimen/_7sdp"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:fontFamily="@font/anek700"
+                    android:textSize="@dimen/_14ssp"
+                    android:text="Next"
+                    android:background="@drawable/get_started_btn"
+                    android:textColor="@color/white" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+</LinearLayout>

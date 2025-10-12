@@ -1,0 +1,109 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F7F7F7"
+    android:orientation="vertical"
+    android:weightSum="10"
+    tools:context="com.Gr8niteout.pub.CommentActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/tool_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+            <TextView
+                android:id="@+id/tool_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Comments"
+                android:textColor="#FFFFFF"
+                android:textSize="@dimen/pt67" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_above="@+id/edit_layout"
+        android:layout_below="@+id/tool_layout">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <ImageView
+        android:id="@+id/no_comment_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textNocommnt"
+        android:layout_centerInParent="true"
+        android:src="@mipmap/comment"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/textNocommnt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="7dp"
+        android:text=""
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/edit_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/send_button"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/edit_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:fadeScrollbars="false"
+            android:hint="Leave a comment"
+            android:inputType="textMultiLine"
+            android:maxLength="2000"
+            android:minLines="1"
+           android:maxLines="4"
+            android:paddingBottom="16.5dp"
+            android:paddingLeft="@dimen/padding20"
+            android:paddingRight="@dimen/padding20"
+            android:paddingTop="16.5dp"
+            android:scrollbars="vertical"
+            android:textColor="#a0a0a0"
+            android:textSize="13sp">
+
+            <requestFocus />
+        </EditText>
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/send_button"
+        android:layout_width="@dimen/padding100"
+        android:layout_height="@dimen/padding100"
+        android:background="#146DC9"
+        android:onClick="PostClick"
+        android:src="@mipmap/send_button"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+</RelativeLayout>

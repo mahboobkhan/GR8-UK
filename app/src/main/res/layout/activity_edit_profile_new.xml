@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="10">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+            <TextView
+                android:id="@+id/txtEditProfile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|start"
+                android:gravity="right"
+                android:onClick="SaveClick"
+                android:padding="15dp"
+                android:text="Edit Profile"
+                android:textColor="@color/white"
+                android:textSize="@dimen/pt67" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10dp"
+                android:gravity="center|right"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txtSave"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="right"
+                    android:onClick="SaveClick"
+                    android:padding="15dp"
+                    android:text="SAVE"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/pt48" />
+            </LinearLayout>
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:fillViewport="true"
+        android:scrollbars="none">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="215dp"
+            android:background="@color/light_black"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="111.67dp"
+                android:id="@+id/image_layout"
+                android:onClick="picChange"
+                android:layout_marginTop="25dp"
+                android:layout_height="111.67dp">
+
+                <com.Gr8niteout.config.RoundImageview
+                    android:id="@+id/imgProfile"
+                    android:layout_width="111.67dp"
+                    android:layout_height="111.67dp"
+                    android:layout_gravity="center"
+                    android:adjustViewBounds="true"
+                    android:onClick="picChange" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:id="@+id/First_Lett"
+                    android:layout_centerInParent="true"
+                    android:textColor="@android:color/white"
+                    android:textSize="60sp" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/txtEditPhoto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:onClick="picChange"
+                android:padding="20dp"
+                android:text="Edit Photo"
+                android:textColor="#f4f3f3"
+                android:textSize="@dimen/pt53" />
+
+        </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txtfirstname_static"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="26dp"
+                    android:text="First Name"
+                    android:textColor="@color/hintgray"
+                    android:textSize="@dimen/pt67" />
+
+
+                <EditText
+                    android:id="@+id/input_firstname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/line_draw"
+                    android:hint="Enter First Name"
+                    android:inputType="textCapWords"
+                    android:maxLength="100"
+                    android:singleLine="true"
+                    android:imeOptions="actionNext"
+                    android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.'"
+                    android:paddingBottom="15dp"
+                    android:nextFocusDown="@+id/input_lastname"
+                    android:paddingTop="5dp"
+                    android:textColor="@color/textgray"
+                    android:textSize="@dimen/pt67" >
+                </EditText>
+
+                <TextView
+                    android:id="@+id/txtsecname_static"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="26dp"
+                    android:text="Last Name"
+                    android:textColor="@color/hintgray"
+                    android:textSize="@dimen/pt67" />
+
+                <EditText
+                    android:id="@+id/input_lastname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/line_draw"
+                    android:hint="Enter Last Name"
+                    android:inputType="textCapWords"
+                    android:paddingBottom="15dp"
+                    android:paddingTop="5dp"
+                    android:maxLength="100"
+                    android:imeOptions="actionDone"
+                    android:singleLine="true"
+                    android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.'"
+                    android:textColor="@color/textgray"
+                    android:textSize="@dimen/pt67" >
+
+                </EditText>
+
+                <TextView
+                    android:id="@+id/txtMobile_static"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="26dp"
+                    android:text="Mobile Number"
+                    android:textColor="@color/hintgray"
+                    android:textSize="@dimen/pt67" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="5dp"
+                    android:weightSum="10">
+
+                    <EditText
+                        android:id="@+id/input_mobile_no"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="8"
+                        android:background="@android:color/transparent"
+                        android:editable="false"
+                        android:focusable="false"
+                        android:hint="Enter Mobile Number"
+                        android:inputType="number"
+                        android:onClick="mobileClick"
+                        android:paddingTop="5dp"
+                        android:textColor="@color/textgray"
+                        android:textSize="@dimen/pt67" />
+
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:paddingTop="5dp">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="mobileClick"
+                            android:layout_gravity="center"
+                            android:src="@mipmap/pencil_edit"
+                            android:visibility="visible" />
+                    </LinearLayout>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1.5dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/lineclr" />
+                <TextView
+                    android:id="@+id/txtEmail_static"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="26dp"
+                    android:text="Email"
+                    android:textColor="@color/hintgray"
+                    android:textSize="@dimen/pt67" />
+
+                <EditText
+                    android:id="@+id/input_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/line_draw"
+                    android:hint="Enter Email Address"
+                    android:inputType="textEmailAddress"
+                    android:paddingBottom="15dp"
+                    android:maxLength="320"
+                    android:paddingTop="5dp"
+                    android:textColor="@color/textgray"
+                    android:textSize="@dimen/pt67" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/img_pager_item"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:clickable="false"
+            android:scaleType="fitXY" />
+
+        <ImageView
+            android:id="@+id/imgPlaceHolder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/img_placeholder"
+            android:visibility="gone" />
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/layoutGray"
+            android:layout_width="match_parent"
+            android:layout_height="162dp"
+            android:background="@mipmap/pub_profile_transparent"
+            android:orientation="horizontal"
+            android:alpha="@fraction/shadow"
+            android:visibility="gone" />
+    </RelativeLayout>
+</LinearLayout>

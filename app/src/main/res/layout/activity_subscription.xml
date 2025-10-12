@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:layout_gravity="center">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/Text"
+            android:text="Subscription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:ignore="HardcodedText">
+
+        </TextView>
+
+
+        <Button
+            android:id="@+id/SubscriptionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Subscription"
+            android:background="@color/ActionBarColor"
+            android:textColor="@color/white"
+            android:padding="@dimen/_20sdp"
+            tools:ignore="HardcodedText" />
+    </LinearLayout>
+
+
+
+</RelativeLayout>

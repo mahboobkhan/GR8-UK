@@ -1,0 +1,41 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="nav_header_vertical_spacing">16dp</dimen>
+    <dimen name="nav_header_height">160dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+
+    <dimen name="pt48">12sp</dimen>
+    <dimen name="pt50">14sp</dimen>
+    <dimen name="pt42">10.25sp</dimen>
+    <dimen name="pt65">17.25sp</dimen>
+    <dimen name="pt67">16.50sp</dimen>
+    <dimen name="pt187">46.75sp</dimen>
+    <dimen name="pt87">21.75sp</dimen>
+    <dimen name="pt89">23.75sp</dimen>
+    <dimen name="pt61">15.25sp</dimen>
+    <dimen name="pt63">16.25sp</dimen>
+    <dimen name="pt175">43.75sp</dimen>
+    <dimen name="pt170">41.75sp</dimen>
+    <dimen name="pt165">40.75sp</dimen>
+    <dimen name="pt77">19.25sp</dimen>
+    <dimen name="pt76">19sp</dimen>
+    <dimen name="pt33">8.25sp</dimen>
+    <dimen name="pt37">9.25sp</dimen>
+    <dimen name="pt149">37.25sp</dimen>
+    <dimen name="pt59">14.75sp</dimen>
+    <dimen name="pt112">28sp</dimen>
+    <dimen name="pt64">16sp</dimen>
+    <dimen name="pt72">18sp</dimen>
+    <dimen name="pt120">30sp</dimen>
+    <dimen name="pt53">13.25sp</dimen>
+    <dimen name="pt57">14.25sp</dimen>
+    <dimen name="pt81">20.25sp</dimen>
+    <dimen name="pt39">9.75sp</dimen>
+    <dimen name="pt45">11.25sp</dimen>
+    <dimen name="dp300">300dp</dimen>
+    <dimen name="dp50">50dp</dimen>
+    <dimen name="dp56.50">56.50dp</dimen>
+</resources>

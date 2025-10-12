@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/lineclr"
+    tools:context=".RegisterPubScreens.GetStartedActivity">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_25sdp"
+        android:src="@mipmap/logo" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:paddingHorizontal="@dimen/_20sdp"
+        android:layout_centerInParent="true">
+
+        <TextView
+            android:id="@+id/txtTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Register your pub for free"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_27ssp"
+            android:paddingHorizontal="@dimen/_15sdp"
+            android:gravity="center"
+            android:fontFamily="@font/inter400" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#464646"
+            android:gravity="center"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_7sdp"
+            android:textSize="@dimen/_13ssp"
+            android:fontFamily="@font/anek400"/>
+
+        <TextView
+            android:id="@+id/tvGetStarted"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_38sdp"
+            android:text="Get Started"
+            android:background="@drawable/get_started_btn"
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_25sdp"
+            android:gravity="center"
+            android:textSize="@dimen/_15ssp"
+            android:fontFamily="@font/anek700"
+            android:textColor="@color/white"/>
+
+    </LinearLayout>
+
+</RelativeLayout>
