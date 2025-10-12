@@ -92,8 +92,11 @@
                         android:layout_width="@dimen/_225sdp"
                         android:layout_height="@dimen/_40sdp"
                         android:layout_gravity="center"
-                        android:background="@mipmap/facebook_button"
-                        android:onClick="FBtnClick" />
+                        android:background="@drawable/register_pub_btn"
+                        android:text="User Login / Register"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_12ssp" />
 
                     <Button
                         android:id="@+id/btn_pub_login"

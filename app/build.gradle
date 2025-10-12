@@ -7,13 +7,13 @@ android {
     compileSdkVersion 34
 
     namespace = "com.Gr8niteout"
-    compileSdk = 34
+    compileSdk = 35
     defaultConfig {
         applicationId "com.Gr8niteout"
         minSdkVersion 23
-        targetSdkVersion 34
-        versionCode 20
-        versionName "1.0.20"
+        targetSdkVersion 35
+        versionCode 21
+        versionName "1.0.21"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         multiDexEnabled true
     }

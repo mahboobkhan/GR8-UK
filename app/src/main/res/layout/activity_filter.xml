@@ -5,6 +5,7 @@
     android:id="@+id/activity_filter"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:context="com.Gr8niteout.search.FilterActivity">
 

@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/white"
+    android:fitsSystemWindows="true"
     tools:context="com.Gr8niteout.search.PubListActivity">
 
     <com.google.android.material.appbar.AppBarLayout

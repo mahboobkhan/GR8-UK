@@ -185,7 +185,7 @@ String generate_token = "";
             @Override
             public void onSuccess(String result) {
                 model1 =  new CountryModel().CountryModel(result);
-                if (model1 != null) {
+                if (model1 != null && model1.response != null) {
                     if (model1.response.status.equals(CommonUtilities.key_Success)) {
                         CommonUtilities.setSecurity_Preference(SplashScreen.this, CommonUtilities.pref_Countries,result);
                         doNext();

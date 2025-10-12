@@ -5,7 +5,8 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:fillViewport="true"
-            android:scrollbars="none">
+    android:fitsSystemWindows="true"
+    android:scrollbars="none">
 
     <LinearLayout
         android:id="@+id/main_layout"

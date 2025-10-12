@@ -87,7 +87,14 @@ public class SignUpMobile extends AppCompatActivity {
         txtCode = (EditText) findViewById(R.id.txtCode);
         main_layout = (LinearLayout) findViewById(R.id.main_layout);
         btnSendSMS = (Button) findViewById(R.id.btnSendSMS);
-        countrymodel = new CountryModel().CountryModel(CommonUtilities.getSecurity_Preference(this, CommonUtilities.pref_Countries));
+        
+        // Safely initialize country model with null check
+        String countriesData = CommonUtilities.getSecurity_Preference(this, CommonUtilities.pref_Countries);
+        if (countriesData != null && !countriesData.isEmpty()) {
+            countrymodel = new CountryModel().CountryModel(countriesData);
+        } else {
+            Log.w("SignUpMobile", "Countries data not available in preferences");
+        }
 
         setFont();
 
@@ -130,18 +137,19 @@ public class SignUpMobile extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        
         if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             setLoc();
         } else {
-
+            Log.w("SignUpMobile", "Location permission denied");
         }
-
-
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        
         if (requestCode == 112 && resultCode == RESULT_OK) {
 
             Intent intent = new Intent();
@@ -166,7 +174,7 @@ public class SignUpMobile extends AppCompatActivity {
         }
 
         if (requestCode == 1) {
-            if (resultCode == Activity.RESULT_OK) {
+            if (resultCode == Activity.RESULT_OK && data != null) {
                 CountryCode = data.getStringExtra("code");
                 CountryName = data.getStringExtra("name");
                 txtCode.setText("+" + CountryCode);
@@ -190,24 +198,32 @@ public class SignUpMobile extends AppCompatActivity {
             geocoder = new Geocoder(this, Locale.getDefault());
             try {
                 addresses = geocoder.getFromLocation(latitude, longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
-                if(addresses.size()!=0)
+                if(addresses != null && addresses.size() != 0)
                 {
                     country = addresses.get(0).getCountryName();
                     Log.i("country", country);
 
-                    for (int i = 0; i < countrymodel.response.country_list.size(); i++) {
+                    // Add null checks to prevent crash
+                    if (countrymodel != null && countrymodel.response != null && countrymodel.response.country_list != null) {
+                        for (int i = 0; i < countrymodel.response.country_list.size(); i++) {
 
-                        if (countrymodel.response.country_list.get(i).country_name.equalsIgnoreCase(country)) {
+                            if (countrymodel.response.country_list.get(i).country_name.equalsIgnoreCase(country)) {
 
-                            String cc = countrymodel.response.country_list.get(i).numcode;
-                            txtSetCountry.setText(country);
-                            txtCode.setText("+" + cc);
+                                String cc = countrymodel.response.country_list.get(i).numcode;
+                                txtSetCountry.setText(country);
+                                txtCode.setText("+" + cc);
+
+                            }
 
                         }
-
+                    } else {
+                        Log.w("SignUpMobile", "Country model is not initialized yet");
                     }
                 }
             } catch (IOException e) {
+                e.printStackTrace();
+            } catch (Exception e) {
+                Log.e("SignUpMobile", "Error in setLoc: " + e.getMessage());
                 e.printStackTrace();
             }
 

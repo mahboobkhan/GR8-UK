@@ -314,9 +314,9 @@ public class  PremisesActivity extends AppCompatActivity {
             @Override
             public void onSuccess(String result) {
                 model1 = new CountryModel().CountryModel(result);
-                if (model1 != null) {
+                if (model1 != null && model1.response != null && model1.response.country_list != null) {
 
-                    if (model1.response.status.equals(CommonUtilities.key_Success)) {
+                    if (model1.response.status != null && model1.response.status.equals(CommonUtilities.key_Success)) {
                         countryList = new String[model1.response.country_list.size()];
 //                        countryCodeList = new String[model1.response.country_list.size()];
 

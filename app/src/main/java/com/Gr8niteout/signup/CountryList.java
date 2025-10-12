@@ -62,11 +62,26 @@ public class CountryList extends AppCompatActivity {
         setFont();
 
         toolbar_title.setText("Select Country");
-        model = new CountryModel().CountryModel(CommonUtilities.getSecurity_Preference(this, CommonUtilities.pref_Countries));
-
-        listadpater = new CountryListAdapter(this,model.response.country_list);
-
-        CountryList.setAdapter(listadpater);
+        
+        // Safely initialize country model with null check
+        String countriesData = CommonUtilities.getSecurity_Preference(this, CommonUtilities.pref_Countries);
+        if (countriesData != null && !countriesData.isEmpty()) {
+            model = new CountryModel().CountryModel(countriesData);
+            
+            // Check if model and response are valid
+            if (model != null && model.response != null && model.response.country_list != null) {
+                listadpater = new CountryListAdapter(this, model.response.country_list);
+                CountryList.setAdapter(listadpater);
+            } else {
+                Log.e("CountryList", "Failed to parse country model data");
+                CommonUtilities.ShowToast(this, "Failed to load country list. Please try again.");
+                finish();
+            }
+        } else {
+            Log.e("CountryList", "Countries data not available in preferences");
+            CommonUtilities.ShowToast(this, "Country data not available. Please restart the app.");
+            finish();
+        }
 
         inputSearch.addTextChangedListener(new TextWatcher() {
 
@@ -93,15 +108,22 @@ public class CountryList extends AppCompatActivity {
         CountryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                intentCountryName = model.response.country_list.get(position).country_name;
-                intentCountryCode = model.response.country_list.get(position).numcode;
-                Log.i("CODE",intentCountryCode);
-                Log.i("NAME",intentCountryName);
-                Intent returnIntent = new Intent();
-                returnIntent.putExtra("code",intentCountryCode);
-                returnIntent.putExtra("name",intentCountryName);
-                setResult(Activity.RESULT_OK,returnIntent);
-                finish();
+                // Add null safety check
+                if (model != null && model.response != null && model.response.country_list != null 
+                        && position < model.response.country_list.size()) {
+                    intentCountryName = model.response.country_list.get(position).country_name;
+                    intentCountryCode = model.response.country_list.get(position).numcode;
+                    Log.i("CODE", intentCountryCode);
+                    Log.i("NAME", intentCountryName);
+                    Intent returnIntent = new Intent();
+                    returnIntent.putExtra("code", intentCountryCode);
+                    returnIntent.putExtra("name", intentCountryName);
+                    setResult(Activity.RESULT_OK, returnIntent);
+                    finish();
+                } else {
+                    Log.e("CountryList", "Invalid country selection");
+                    CommonUtilities.ShowToast(CountryList.this, "Failed to select country");
+                }
             }
         });
 

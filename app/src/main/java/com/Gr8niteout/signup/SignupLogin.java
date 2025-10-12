@@ -160,42 +160,41 @@ public class SignupLogin extends AppCompatActivity implements Animation.Animatio
         client = BillingClient.newBuilder(getApplicationContext()).setListener(purchasesUpdatedListener).enablePendingPurchases().build();
 
 
-        btn_pub_login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(SignupLogin.this, PubLoginActivity.class);
-                intent.putExtra("pub_id", "");
-                intent.putExtra("isSuccess",3);
-                startActivity(intent);
-            }
+        btn_fb_custom.setOnClickListener(view -> {
+            Intent intent = new Intent(SignupLogin.this, UserLoginActivity.class);
+            startActivity(intent);
+        });
+
+        btn_pub_login.setOnClickListener(view -> {
+            Intent intent = new Intent(SignupLogin.this, PubLoginActivity.class);
+            intent.putExtra("pub_id", "");
+            intent.putExtra("isSuccess",3);
+            startActivity(intent);
         });
         Dialog dialog = new Dialog(SignupLogin.this);
         
-        sub_btn_pub.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        sub_btn_pub.setOnClickListener(view -> {
 
 //                SubscriptionService();
 //                checkSubscriptionStatus();
 
-                dialog.setContentView(R.layout.connect_subscription_dialog);
-                dialog.setCancelable(false);
-                dialog.show();
-                TextView tvConnectStripe = dialog.findViewById(R.id.GetAccountSubscription);
+            dialog.setContentView(R.layout.connect_subscription_dialog);
+            dialog.setCancelable(false);
+            dialog.show();
+            TextView tvConnectStripe = dialog.findViewById(R.id.GetAccountSubscription);
 
-                tvConnectStripe.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dialog.hide();
-
-
-                        startActivity(new Intent(SignupLogin.this, MultipleSubscription.class));
-                    }
-                });
+            tvConnectStripe.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.hide();
 
 
+                    startActivity(new Intent(SignupLogin.this, MultipleSubscription.class));
+                }
+            });
 
-            }
+
+
         });
 
 
