@@ -3,6 +3,7 @@ package com.Gr8niteout.myprofile;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
@@ -81,7 +82,18 @@ public class MyProfileFragment extends Fragment implements View.OnClickListener 
         line = (LinearLayout) view.findViewById(R.id.line);
         notLoginLayout = (LinearLayout) view.findViewById(R.id.not_login_layout);
 
-        model = new SignUpModel().SignUpModel(CommonUtilities.getPreference(mActivity, CommonUtilities.pref_UserData));
+        // Safely parse user data with null checks
+        String userDataString = CommonUtilities.getPreference(mActivity, CommonUtilities.pref_UserData);
+        if (userDataString != null && !userDataString.isEmpty()) {
+            try {
+                model = new SignUpModel().SignUpModel(userDataString);
+            } catch (Exception e) {
+                Log.e("MyProfileFragment", "Error parsing user data: " + e.getMessage());
+                model = null;
+            }
+        } else {
+            model = null;
+        }
 
         setFont();
 
@@ -159,9 +171,20 @@ public class MyProfileFragment extends Fragment implements View.OnClickListener 
         super.onResume();
         mActivity.isExit = true;
         String sd = CommonUtilities.getPreference(mActivity, CommonUtilities.pref_UserData);
-        model = new SignUpModel().SignUpModel(CommonUtilities.getPreference(mActivity, CommonUtilities.pref_UserData));
+        // Safely parse user data with null checks
+        String userDataString = CommonUtilities.getPreference(mActivity, CommonUtilities.pref_UserData);
+        if (userDataString != null && !userDataString.isEmpty()) {
+            try {
+                model = new SignUpModel().SignUpModel(userDataString);
+            } catch (Exception e) {
+                Log.e("MyProfileFragment", "Error parsing user data in onResume: " + e.getMessage());
+                model = null;
+            }
+        } else {
+            model = null;
+        }
 
-        if (!CommonUtilities.getPreference(mActivity, CommonUtilities.pref_UserId).equals("")) {
+        if (!CommonUtilities.getPreference(mActivity, CommonUtilities.pref_UserId).equals("") && model != null && model.response != null && model.response.user_data != null) {
             loggedIn.setVisibility(View.VISIBLE);
             notLoginLayout.setVisibility(View.GONE);
             userid = model.response.user_data.user_id;

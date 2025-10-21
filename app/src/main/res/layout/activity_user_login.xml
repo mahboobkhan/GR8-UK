@@ -75,17 +75,37 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/_13ssp" />
 
-            <EditText
-                android:id="@+id/edtPassword"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:background="@drawable/edt_pub_register"
-                android:hint="Password"
-                android:inputType="textPassword"
-                android:textColor="@color/black"
-                android:textColorHint="@color/pub_gray"
-                android:textSize="@dimen/_12ssp" />
+                android:layout_marginTop="@dimen/_10sdp">
+
+                <EditText
+                    android:id="@+id/edtPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edt_pub_register"
+                    android:hint="Password"
+                    android:inputType="textPassword"
+                    android:paddingEnd="@dimen/_40sdp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/pub_gray"
+                    android:textSize="@dimen/_12ssp" />
+
+                <ImageView
+                    android:id="@+id/btnTogglePassword"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:padding="@dimen/_2sdp"
+                    android:src="@drawable/ic_eye_off"
+                    android:clickable="true"
+                    android:focusable="true" />
+
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/tvForgotPassword"

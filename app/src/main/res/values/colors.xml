@@ -46,4 +46,6 @@
     <color name="red">#FF0000</color>
     <color name="pub_light_green">#9AC525</color>
     <color name="pub_head_grey">#474646</color>
+    <color name="primary_color">#0052A6</color>
+    <color name="light_gray">#F5F5F5</color>
 </resources>

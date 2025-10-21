@@ -87,7 +87,12 @@ public class SignUpModel {
 	}
 
 	public SignUpModel SignUpModel(String response) {
-		Gson gson = new Gson();
-		return (SignUpModel) gson.fromJson(response,SignUpModel.class);
+		try {
+			Gson gson = new Gson();
+			return (SignUpModel) gson.fromJson(response, SignUpModel.class);
+		} catch (Exception e) {
+			// Return null if parsing fails
+			return null;
+		}
 	}
 }

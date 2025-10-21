@@ -9,39 +9,75 @@ import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.Gr8niteout.MainActivity;
 import com.Gr8niteout.R;
 import com.Gr8niteout.config.CommonUtilities;
-import com.Gr8niteout.config.ServerAccess;
-import com.Gr8niteout.model.SignUpModel;
+import com.Gr8niteout.config.RetrofitClient;
+import com.Gr8niteout.model.UserLoginResponse;
+import com.Gr8niteout.services.UserAuthService;
+import com.Gr8niteout.utils.LoadingDialog;
+import com.google.gson.Gson;
 
-import java.util.HashMap;
-import java.util.Map;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class UserLoginActivity extends AppCompatActivity {
 
     TextView tvCreateAnAccount, tvLogin, tvForgotPassword;
     EditText edtEmail, edtPassword;
-    SignUpModel signUpModel;
+    ImageView btnTogglePassword;
+    UserAuthService userAuthService;
+    LoadingDialog loadingDialog;
+    boolean isPasswordVisible = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_login);
 
+
         tvCreateAnAccount = findViewById(R.id.tvCreateAnAccount);
         edtEmail = findViewById(R.id.edtEmail);
         edtPassword = findViewById(R.id.edtPassword);
         tvLogin = findViewById(R.id.tvLogin);
         tvForgotPassword = findViewById(R.id.tvForgotPassword);
+        btnTogglePassword = findViewById(R.id.btnTogglePassword);
+
+        // Initialize Retrofit service
+        userAuthService = RetrofitClient.getInstance().getRetrofit().create(UserAuthService.class);
+        
+        // Initialize loading dialog
+        loadingDialog = new LoadingDialog(this);
 
         tvCreateAnAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Navigate to user registration screen
                 startActivity(new Intent(UserLoginActivity.this, UserSignUpActivity.class));
+            }
+        });
+
+        // Password visibility toggle
+        btnTogglePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isPasswordVisible) {
+                    // Hide password
+                    edtPassword.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    btnTogglePassword.setImageResource(R.drawable.ic_eye_off);
+                    isPasswordVisible = false;
+                } else {
+                    // Show password
+                    edtPassword.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                    btnTogglePassword.setImageResource(R.drawable.ic_eye_on);
+                    isPasswordVisible = true;
+                }
+                // Move cursor to end
+                edtPassword.setSelection(edtPassword.getText().length());
             }
         });
 
@@ -85,24 +121,53 @@ public class UserLoginActivity extends AppCompatActivity {
     }
 
     public void callUserLoginApi() {
-        Map<String, String> paramsTemp = new HashMap<>();
-        paramsTemp.put("email", edtEmail.getText().toString().trim());
-        paramsTemp.put("password", edtPassword.getText().toString().trim());
+        String email = edtEmail.getText().toString().trim();
+        String password = edtPassword.getText().toString().trim();
 
-        ServerAccess.getResponse(UserLoginActivity.this, CommonUtilities.key_signup_service, paramsTemp, true, new ServerAccess.VolleyCallback() {
+        Log.d("UserLogin", "Attempting login with email: " + email);
+        
+        // Show loading dialog
+        loadingDialog.show("Signing you in...");
+
+        Call<UserLoginResponse> call = userAuthService.userLogin(email, password);
+        call.enqueue(new Callback<UserLoginResponse>() {
             @Override
-            public void onSuccess(String result) {
-                signUpModel = new SignUpModel().SignUpModel(result);
-                if (signUpModel != null) {
-                    if(signUpModel.response.status.equals(CommonUtilities.key_Success)){
-                        if (signUpModel.response.user_data.token != null)
-                            CommonUtilities.setSecurity_Preference(UserLoginActivity.this, CommonUtilities.key_security_toekn, signUpModel.response.user_data.token);
-                        
-                        CommonUtilities.setPreference(UserLoginActivity.this, CommonUtilities.pref_UserData, result);
-                        CommonUtilities.setPreference(UserLoginActivity.this, CommonUtilities.pref_UserId, signUpModel.response.user_data.user_id);
-                        
-                        if (signUpModel.response.user_data.flag.equals("1")) {
-                            if (signUpModel.response.user_data.user_active_status.equals("1")) {
+            public void onResponse(Call<UserLoginResponse> call, Response<UserLoginResponse> response) {
+                // Dismiss loading dialog
+                loadingDialog.dismiss();
+                
+                if (response.isSuccessful() && response.body() != null) {
+                    UserLoginResponse loginResponse = response.body();
+                    Log.d("UserLogin", "API Response: " + loginResponse.toString());
+                    Log.d("UserLogin", "Response Status: " + (loginResponse.response != null ? loginResponse.response.status : "null"));
+                    Log.d("UserLogin", "Response Message: " + (loginResponse.response != null ? loginResponse.response.msg : "null"));
+                    
+                    if (loginResponse.response != null) {
+                        if (loginResponse.response.status.equals("Success") || 
+                            loginResponse.response.status.equals(CommonUtilities.key_Success)) {
+                            
+                            // Store user data
+                            if (loginResponse.response.data != null) {
+                                UserLoginResponse.Data userData = loginResponse.response.data;
+                                
+                                // Store token if available
+                                if (userData.token != null && !userData.token.isEmpty()) {
+                                    CommonUtilities.setSecurity_Preference(UserLoginActivity.this, 
+                                            CommonUtilities.key_security_toekn, userData.token);
+                                }
+                                
+                                // Store user ID
+                                if (userData.user_id != null && !userData.user_id.isEmpty()) {
+                                    CommonUtilities.setPreference(UserLoginActivity.this, 
+                                            CommonUtilities.pref_UserId, userData.user_id);
+                                }
+                                
+                                // Store user data as JSON string
+                                Gson gson = new Gson();
+                                String userDataJson = gson.toJson(response.body());
+                                CommonUtilities.setPreference(UserLoginActivity.this, 
+                                        CommonUtilities.pref_UserData, userDataJson);
+                                
                                 CommonUtilities.ShowToast(UserLoginActivity.this, "Login successful!");
                                 
                                 // Navigate to MainActivity
@@ -110,25 +175,30 @@ public class UserLoginActivity extends AppCompatActivity {
                                 startActivity(i);
                                 finishAffinity();
                             } else {
-                                CommonUtilities.alertdialog(UserLoginActivity.this, signUpModel.response.msg);
+                                CommonUtilities.ShowToast(UserLoginActivity.this, "Invalid response data");
                             }
-                        } else if (signUpModel.response.user_data.flag.equals("0")) {
-                            // User needs to complete registration
-                            Intent i = new Intent(UserLoginActivity.this, SignUpMobile.class);
-                            startActivity(i);
-                            finish();
                         } else {
-                            CommonUtilities.ShowToast(UserLoginActivity.this, signUpModel.response.msg);
+                            // Login failed
+                            String errorMsg = loginResponse.response.msg != null ? 
+                                    loginResponse.response.msg : "Login failed";
+                            CommonUtilities.ShowToast(UserLoginActivity.this, errorMsg);
                         }
                     } else {
-                        CommonUtilities.ShowToast(UserLoginActivity.this, signUpModel.response.msg);
+                        CommonUtilities.ShowToast(UserLoginActivity.this, "Invalid response format");
                     }
+                } else {
+                    Log.e("UserLogin", "API call failed: " + response.code() + " - " + response.message());
+                    CommonUtilities.ShowToast(UserLoginActivity.this, "Login failed. Please try again.");
                 }
             }
 
             @Override
-            public void onError(String error) {
-                CommonUtilities.ShowToast(UserLoginActivity.this, "Something went wrong!");
+            public void onFailure(Call<UserLoginResponse> call, Throwable t) {
+                // Dismiss loading dialog
+                loadingDialog.dismiss();
+                
+                Log.e("UserLogin", "Network error: " + t.getMessage());
+                CommonUtilities.ShowToast(UserLoginActivity.this, "Network error. Please check your connection.");
             }
         });
     }
