@@ -1,10 +1,17 @@
 package com.Gr8niteout.buycredits
 
+import android.Manifest
 import android.app.Activity
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Base64
@@ -16,6 +23,9 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.startActivity
 import com.Gr8niteout.BuildConfig
 import com.Gr8niteout.R
@@ -32,6 +42,7 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 import java.lang.ref.WeakReference
 import androidx.core.net.toUri
+import com.Gr8niteout.MainActivity
 
 class PayActivity : AppCompatActivity() {
 
@@ -41,6 +52,15 @@ class PayActivity : AppCompatActivity() {
     private lateinit var pubCreditAmount: TextView
     private lateinit var totalAmount: TextView
     private lateinit var bookingFeeAmount: TextView
+    
+    // Notification constants
+    companion object {
+        private const val NOTIFICATION_PERMISSION_REQUEST_CODE = 1001
+        private const val PAYMENT_SUCCESS_CHANNEL_ID = "payment_success_channel"
+        private const val PAYMENT_FAILED_CHANNEL_ID = "payment_failed_channel"
+        private const val PAYMENT_SUCCESS_NOTIFICATION_ID = 1002
+        private const val PAYMENT_FAILED_NOTIFICATION_ID = 1003
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,8 +75,7 @@ class PayActivity : AppCompatActivity() {
         initialiseViews()
         setUpToolbar()
         setUpStripe() // Enable Stripe setup for testing
-
-
+        createNotificationChannels()
 
 //        val paramsTemp: MutableMap<String, String> = HashMap()
         Log.d("paramsTemp------>>", intent.getStringExtra(CommonUtilities.key_rec_photo).toString());
@@ -122,6 +141,23 @@ class PayActivity : AppCompatActivity() {
 
 
     fun pay(view: View){
+        // Check notification permission before proceeding with payment
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) 
+                != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                    NOTIFICATION_PERMISSION_REQUEST_CODE
+                )
+                return
+            }
+        }
+        
+        proceedWithPayment()
+    }
+    
+    private fun proceedWithPayment(){
         val paramsTemp: MutableMap<String, String> = HashMap()
         paramsTemp["pub_id"] = intent.getStringExtra(CommonUtilities.key_pub_id).toString()
         paramsTemp["user_id"] = intent.getStringExtra(CommonUtilities.key_user_id).toString()
@@ -220,6 +256,9 @@ class PayActivity : AppCompatActivity() {
                     Log.d("PayActivityTrack", "Stripe API Response: $result")
                     val stripeUserModel:StripeUserModel = StripeUserModel().StripeUserModel(result)
                     if (stripeUserModel.code == CommonUtilities.key_success_code) {
+                        // Show payment success notification
+                        showPaymentSuccessNotification()
+                        
                         val intent = Intent(
                             this@PayActivity,
                             StripeWebViewActivity::class.java
@@ -232,6 +271,8 @@ class PayActivity : AppCompatActivity() {
                         intent.putExtra("isFromUserLogin", 1)
                         startActivity(intent)
                     } else {
+                        // Show payment failed notification
+                        showPaymentFailedNotification()
                         // Show detailed error information in debug mode
                         showDetailedError(stripeUserModel)
                     }
@@ -239,6 +280,8 @@ class PayActivity : AppCompatActivity() {
 
                 override fun onError(error: String) {
                     Log.e("PayActivityTrack", "Network Error: $error")
+                    // Show payment failed notification for network error
+                    showPaymentFailedNotification()
                     CommonUtilities.ShowToast(this@PayActivity, "Network Error: $error")
                 }
             })
@@ -371,5 +414,112 @@ class PayActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+    
+    // Notification permission handling
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            NOTIFICATION_PERMISSION_REQUEST_CODE -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Log.d("PayActivity", "Notification permission granted")
+                    proceedWithPayment()
+                } else {
+                    Log.d("PayActivity", "Notification permission denied")
+                    // Still proceed with payment but without notifications
+                    proceedWithPayment()
+                }
+            }
+        }
+    }
+    
+    // Create notification channels for Android 8.0+
+    private fun createNotificationChannels() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            
+            // Payment Success Channel
+            val successChannel = NotificationChannel(
+                PAYMENT_SUCCESS_CHANNEL_ID,
+                "Payment Success",
+                NotificationManager.IMPORTANCE_HIGH
+            ).apply {
+                description = "Notifications for successful payments"
+                enableLights(true)
+                enableVibration(true)
+            }
+            
+            // Payment Failed Channel
+            val failedChannel = NotificationChannel(
+                PAYMENT_FAILED_CHANNEL_ID,
+                "Payment Failed",
+                NotificationManager.IMPORTANCE_HIGH
+            ).apply {
+                description = "Notifications for failed payments"
+                enableLights(true)
+                enableVibration(true)
+            }
+            
+            notificationManager.createNotificationChannel(successChannel)
+            notificationManager.createNotificationChannel(failedChannel)
+        }
+    }
+    
+    // Show payment success notification
+    private fun showPaymentSuccessNotification() {
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        
+        // Create intent for when notification is tapped
+//        val intent = Intent(this, MainActivity::class.java)
+//        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//        val pendingIntent = PendingIntent.getActivity(
+//            this, 0, intent,
+//            PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE
+//        )
+        
+        // Get app icon
+        val largeIcon = BitmapFactory.decodeResource(resources, R.mipmap.app_icon)
+        
+        val notification = NotificationCompat.Builder(this, PAYMENT_SUCCESS_CHANNEL_ID)
+            .setSmallIcon(R.mipmap.app_icon) // App icon
+            .setLargeIcon(largeIcon) // Large app icon
+            .setContentTitle(getString(R.string.app_name)) // App name as title
+            .setContentText("Congratulations! You have successfully bought Pub Credit") // Body text
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setAutoCancel(true)
+           // .setContentIntent(pendingIntent)
+            .build()
+        
+        notificationManager.notify(PAYMENT_SUCCESS_NOTIFICATION_ID, notification)
+        Log.d("PayActivity", "Payment success notification shown")
+    }
+    
+    // Show payment failed notification
+    private fun showPaymentFailedNotification() {
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        
+        // Create intent for when notification is tapped
+//        val intent = Intent(this, MainActivity::class.java)
+//        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//        val pendingIntent = PendingIntent.getActivity(
+//            this, 0, intent,
+//            PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE
+//        )
+        
+        // Get app icon
+        val largeIcon = BitmapFactory.decodeResource(resources, R.mipmap.app_icon)
+        
+        val notification = NotificationCompat.Builder(this, PAYMENT_FAILED_CHANNEL_ID)
+            .setSmallIcon(R.mipmap.app_icon) // App icon
+            .setLargeIcon(largeIcon) // Large app icon
+            .setContentTitle("${getString(R.string.app_name)} - Payment Failed") // App name in title
+            .setContentText("Payment Failed - Try again") // Body text
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setAutoCancel(true)
+          //  .setContentIntent(pendingIntent)
+            .build()
+        
+        notificationManager.notify(PAYMENT_FAILED_NOTIFICATION_ID, notification)
+        Log.d("PayActivity", "Payment failed notification shown")
     }
 }
