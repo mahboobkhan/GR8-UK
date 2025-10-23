@@ -19,10 +19,13 @@ import android.widget.TextView;
 import com.Gr8niteout.R;
 import com.Gr8niteout.adapter.CountryListAdapter;
 import com.Gr8niteout.config.CommonUtilities;
+import com.Gr8niteout.config.ServerAccess;
 import com.Gr8niteout.model.CountryModel;
 import com.google.android.gms.analytics.GoogleAnalytics;
 
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import butterknife.ButterKnife;
 import butterknife.BindView;
@@ -74,13 +77,13 @@ public class CountryList extends AppCompatActivity {
                 CountryList.setAdapter(listadpater);
             } else {
                 Log.e("CountryList", "Failed to parse country model data");
-                CommonUtilities.ShowToast(this, "Failed to load country list. Please try again.");
-                finish();
+                // Try to load from API as fallback
+                loadCountriesFromAPI();
             }
         } else {
-            Log.e("CountryList", "Countries data not available in preferences");
-            CommonUtilities.ShowToast(this, "Country data not available. Please restart the app.");
-            finish();
+            Log.e("CountryList", "Countries data not available in preferences, loading from API");
+            // Load from API as fallback
+            loadCountriesFromAPI();
         }
 
         inputSearch.addTextChangedListener(new TextWatcher() {
@@ -128,6 +131,50 @@ public class CountryList extends AppCompatActivity {
         });
 
     }
+    
+    private void loadCountriesFromAPI() {
+        Map<String, String> params = new HashMap<String, String>();
+        
+        ServerAccess.getResponse(CountryList.this, CommonUtilities.key_countries, params, true, new ServerAccess.VolleyCallback() {
+            @Override
+            public void onSuccess(String result) {
+                model = new CountryModel().CountryModel(result);
+                if (model != null && model.response != null) {
+                    if (model.response.status != null && model.response.status.equals(CommonUtilities.key_Success)) {
+                        // Save to preferences for future use
+                        CommonUtilities.setSecurity_Preference(CountryList.this, CommonUtilities.pref_Countries, result);
+                        
+                        // Check if country list is valid
+                        if (model.response.country_list != null && model.response.country_list.size() > 0) {
+                            listadpater = new CountryListAdapter(CountryList.this, model.response.country_list);
+                            CountryList.setAdapter(listadpater);
+                            Log.d("CountryList", "Successfully loaded " + model.response.country_list.size() + " countries from API");
+                        } else {
+                            Log.e("CountryList", "Country list is empty");
+                            CommonUtilities.ShowToast(CountryList.this, "No countries available");
+                            finish();
+                        }
+                    } else {
+                        Log.e("CountryList", "API returned error status");
+                        CommonUtilities.ShowToast(CountryList.this, model.response.msg != null ? model.response.msg : "Failed to load countries");
+                        finish();
+                    }
+                } else {
+                    Log.e("CountryList", "Failed to parse country data from API");
+                    CommonUtilities.ShowToast(CountryList.this, "Failed to load country list. Please try again.");
+                    finish();
+                }
+            }
+
+            @Override
+            public void onError(String error) {
+                Log.e("CountryList", "API error: " + error);
+                CommonUtilities.ShowToast(CountryList.this, "Network error. Please check your connection.");
+                finish();
+            }
+        });
+    }
+    
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // handle arrow click here

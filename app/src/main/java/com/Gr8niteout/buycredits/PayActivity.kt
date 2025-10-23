@@ -31,6 +31,7 @@ import com.stripe.android.model.StripeIntent
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.lang.ref.WeakReference
+import androidx.core.net.toUri
 
 class PayActivity : AppCompatActivity() {
 
@@ -132,8 +133,8 @@ class PayActivity : AppCompatActivity() {
         paramsTemp["currency"] = intent.getStringExtra("currency").toString()
         paramsTemp["comment"] = intent.getStringExtra("comment").toString()
 
-        val pickedImageUri: Uri? = intent.getStringExtra(CommonUtilities.key_rec_photo)?.let { Uri.parse(it) }
-        val pickedVideoUri: Uri? = intent.getStringExtra(CommonUtilities.key_rec_video)?.let { Uri.parse(it) }
+        val pickedImageUri: Uri? = intent.getStringExtra(CommonUtilities.key_rec_photo)?.let { it.toUri() }
+        val pickedVideoUri: Uri? = intent.getStringExtra(CommonUtilities.key_rec_video)?.let { it.toUri() }
 
         val imageData = intent.getStringExtra(CommonUtilities.key_rec_photo).toString()
 

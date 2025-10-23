@@ -307,8 +307,7 @@ public class BuyCreditActivity extends AppCompatActivity {
                     Intent i = new Intent(BuyCreditActivity.this, RecipientActivity.class);
                     if (edtCredit.getText().toString().startsWith("."))
                         i.putExtra("amount", "0" + edtCredit.getText().toString());
-                    else
-                        i.putExtra("amount", edtCredit.getText().toString());
+                    else i.putExtra("amount", edtCredit.getText().toString());
                     i.putExtra("currency",currency.toUpperCase());
                     i.putExtra("name", txtName.getText().toString());
                     i.putExtra("email", txtEmail.getText().toString());
