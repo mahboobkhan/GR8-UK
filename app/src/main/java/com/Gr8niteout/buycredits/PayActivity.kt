@@ -12,9 +12,11 @@ import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat.startActivity
 import com.Gr8niteout.BuildConfig
 import com.Gr8niteout.R
 import com.Gr8niteout.config.CommonUtilities
@@ -25,7 +27,7 @@ import com.stripe.android.ApiResultCallback
 import com.stripe.android.PaymentIntentResult
 import com.stripe.android.Stripe
 import com.stripe.android.model.StripeIntent
-import kotlinx.android.synthetic.main.activity_pay.*
+// Removed deprecated kotlinx.android.synthetic import - using findViewById instead
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.lang.ref.WeakReference
@@ -34,15 +36,24 @@ class PayActivity : AppCompatActivity() {
 
     private lateinit var paymentIntentClientSecret: String
     private lateinit var stripe: Stripe
-    private lateinit var payBtn : Button
+    private lateinit var payBtn: Button
+    private lateinit var pubCreditAmount: TextView
+    private lateinit var totalAmount: TextView
+    private lateinit var bookingFeeAmount: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pay)
+        
+        // Initialize views with findViewById
         payBtn = findViewById(R.id.payBtn)
+        pubCreditAmount = findViewById(R.id.pub_credit_amount)
+        totalAmount = findViewById(R.id.total_amount)
+        bookingFeeAmount = findViewById(R.id.booking_fee_amount)
+        
         initialiseViews()
         setUpToolbar()
-//        setUpStripe()
+        setUpStripe() // Enable Stripe setup for testing
 
 
 
@@ -53,16 +64,24 @@ class PayActivity : AppCompatActivity() {
     }
 
     private fun initialiseViews(){
-        val pubCreditAmount = intent.getStringExtra(CommonUtilities.key_amount) ?: "0.00"
-        val totalAmount = intent.getStringExtra(CommonUtilities.key_amount_booking_fee) ?: "0.00"
-        pub_credit_amount.text = pubCreditAmount
-        total_amount.text = totalAmount
-        booking_fee_amount.text = "1.00"
+        val pubCreditAmountValue = intent.getStringExtra(CommonUtilities.key_amount) ?: "0.00"
+        val totalAmountValue = intent.getStringExtra(CommonUtilities.key_amount_booking_fee) ?: "0.00"
+        pubCreditAmount.text = pubCreditAmountValue
+        totalAmount.text = totalAmountValue
+        bookingFeeAmount.text = "1.00"
     }
     private fun setUpStripe(){
         paymentIntentClientSecret = intent.getStringExtra(CommonUtilities.clientSecretIntentKey) ?: ""
         Log.d("PayActivity", "paymentIntentClientSecret : $paymentIntentClientSecret")
+        Log.d("PayActivity", "Using Stripe Test Key: ${BuildConfig.STRIPE_PUBLISHABLE_KEY}")
         stripe = Stripe(applicationContext, BuildConfig.STRIPE_PUBLISHABLE_KEY)
+        
+        // Log test mode configuration
+        if (BuildConfig.STRIPE_PUBLISHABLE_KEY.startsWith("pk_test_")) {
+            Log.d("PayActivity", "✅ Stripe Test Mode Enabled - Safe for Pakistan Testing")
+        } else {
+            Log.w("PayActivity", "⚠️ Warning: Not using test keys - make sure this is intended!")
+        }
     }
 
     private fun setUpToolbar(){
@@ -197,6 +216,7 @@ class PayActivity : AppCompatActivity() {
             true,
             object : VolleyCallback {
                 override fun onSuccess(result: String) {
+                    Log.d("PayActivity", "Stripe API Response: $result")
                     val stripeUserModel:StripeUserModel = StripeUserModel().StripeUserModel(result)
                     if (stripeUserModel.code == CommonUtilities.key_success_code) {
                         val intent = Intent(
@@ -211,14 +231,72 @@ class PayActivity : AppCompatActivity() {
                         intent.putExtra("isFromUserLogin", 1)
                         startActivity(intent)
                     } else {
-                        CommonUtilities.ShowToast(this@PayActivity, stripeUserModel.msg)
+                        // Show detailed error information in debug mode
+                        showDetailedError(stripeUserModel)
                     }
                 }
 
                 override fun onError(error: String) {
-                    CommonUtilities.ShowToast(this@PayActivity, "Something went wrong!")
+                    Log.e("PayActivity", "Network Error: $error")
+                    CommonUtilities.ShowToast(this@PayActivity, "Network Error: $error")
                 }
             })
+    }
+
+    private fun showDetailedError(stripeUserModel: StripeUserModel) {
+        val errorMessage = StringBuilder()
+        
+        // Basic error info
+        errorMessage.append("Payment Failed\n")
+        errorMessage.append("Status: ${stripeUserModel.status}\n")
+        errorMessage.append("Code: ${stripeUserModel.code}\n")
+        errorMessage.append("Message: ${stripeUserModel.msg}\n")
+        
+        // Detailed error info if available
+        if (stripeUserModel.data?.error != null) {
+            val error = stripeUserModel.data.error
+            errorMessage.append("\n--- Detailed Error ---\n")
+            errorMessage.append("Error Type: ${error.type}\n")
+            errorMessage.append("Error Code: ${error.code}\n")
+            errorMessage.append("Error Message: ${error.message}\n")
+            errorMessage.append("Parameter: ${error.param}\n")
+            
+            if (!error.doc_url.isNullOrEmpty()) {
+                errorMessage.append("Documentation: ${error.doc_url}\n")
+            }
+            
+            if (!error.request_log_url.isNullOrEmpty()) {
+                errorMessage.append("Request Log: ${error.request_log_url}\n")
+            }
+        }
+        
+        // Log detailed error for debugging
+        Log.e("PayActivity", "Detailed Error: $errorMessage")
+        
+        // Show detailed error in debug mode, simple error in release mode
+        if (BuildConfig.DEBUG) {
+            showDetailedErrorDialog(errorMessage.toString())
+        } else {
+            CommonUtilities.ShowToast(this@PayActivity, stripeUserModel.msg)
+        }
+    }
+
+    private fun showDetailedErrorDialog(errorMessage: String) {
+        val alertDialog = androidx.appcompat.app.AlertDialog.Builder(this)
+        alertDialog.setTitle("Payment Error (Debug Mode)")
+        alertDialog.setMessage(errorMessage)
+        alertDialog.setPositiveButton("OK") { dialog, _ ->
+            dialog.dismiss()
+        }
+        alertDialog.setNegativeButton("Copy Error") { _, _ ->
+            // Copy error to clipboard for debugging
+            val clipboard = getSystemService(android.content.Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
+            val clip = android.content.ClipData.newPlainText("Stripe Error", errorMessage)
+            clipboard.setPrimaryClip(clip)
+            CommonUtilities.ShowToast(this, "Error copied to clipboard")
+        }
+        alertDialog.show()
+    }
 
 
 //        val cardInputWidget = findViewById<CardInputWidget>(R.id.cardInputWidget)
@@ -229,7 +307,7 @@ class PayActivity : AppCompatActivity() {
 //            stripe.confirmPayment(this, confirmParams)
 //            controlPayBtnState(true)
 //        }
-    }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

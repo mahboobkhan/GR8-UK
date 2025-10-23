@@ -28,7 +28,9 @@ import com.Gr8niteout.config.MyApplication;
 import com.Gr8niteout.config.ServerAccess;
 import com.Gr8niteout.model.BirthdayModel;
 import com.Gr8niteout.model.SignUpModel;
+import com.Gr8niteout.model.UserLoginResponse;
 import com.Gr8niteout.signup.SignupLogin;
+import com.google.gson.Gson;
 import com.google.android.gms.analytics.HitBuilders;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -42,6 +44,7 @@ public class Birthdays extends Fragment {
     ImageView share_btn;
     ImageView btn_login;
     SignUpModel signUpModel;
+    UserLoginResponse userLoginModel;
     BirthdayModel model;
     String userid;
     public static RecyclerView recyclerView;
@@ -66,7 +69,26 @@ public class Birthdays extends Fragment {
 
         CommonUtilities.setPreference(mActivity, CommonUtilities.pref_from_birthday, "false");
 
-        signUpModel = new SignUpModel().SignUpModel(CommonUtilities.getPreference(mActivity, CommonUtilities.pref_UserData));
+        // Safely parse user data with null checks
+        String userDataString = CommonUtilities.getPreference(mActivity, CommonUtilities.pref_UserData);
+        if (userDataString != null && !userDataString.isEmpty()) {
+            try {
+                // Try to parse as SignUpModel first (for Facebook login)
+                signUpModel = new SignUpModel().SignUpModel(userDataString);
+                if (signUpModel == null) {
+                    // If SignUpModel parsing fails, try UserLoginResponse (for email/password login)
+                    Gson gson = new Gson();
+                    userLoginModel = gson.fromJson(userDataString, UserLoginResponse.class);
+                }
+            } catch (Exception e) {
+                // Handle parsing errors gracefully
+                signUpModel = null;
+                userLoginModel = null;
+            }
+        } else {
+            signUpModel = null;
+            userLoginModel = null;
+        }
         //userid = CommonUtilities.getPreference(mActivity,CommonUtilities.pref_UserId);
 
         if (!CommonUtilities.getPreference(mActivity, CommonUtilities.pref_UserId).equals("")) {
@@ -134,7 +156,15 @@ public class Birthdays extends Fragment {
         Map<String, String> params = new HashMap<String, String>();
 //        params.put(CommonUtilities.key_user_id,"149");
         params.put(CommonUtilities.key_user_id, CommonUtilities.getPreference(mActivity, CommonUtilities.pref_UserId));
-        params.put("fb_id", signUpModel.response.user_data.fb_id);
+        
+        // Safely get fb_id from user data
+        String fbId = "";
+        if (signUpModel != null && signUpModel.response != null && signUpModel.response.user_data != null) {
+            fbId = signUpModel.response.user_data.fb_id != null ? signUpModel.response.user_data.fb_id : "";
+        } else if (userLoginModel != null && userLoginModel.response != null && userLoginModel.response.responseInfo != null && userLoginModel.response.responseInfo.data != null) {
+            fbId = userLoginModel.response.responseInfo.data.facebook_id != null ? userLoginModel.response.responseInfo.data.facebook_id : "";
+        }
+        params.put("fb_id", fbId);
 //        params.put("fb_id","769356289804290");
         ServerAccess.getResponse(mActivity, CommonUtilities.key_get_friends_birthdays, params, true, new ServerAccess.VolleyCallback() {
             @Override

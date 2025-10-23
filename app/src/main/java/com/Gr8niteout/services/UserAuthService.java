@@ -11,10 +11,10 @@ import retrofit2.http.POST;
 public interface UserAuthService {
     
     @FormUrlEncoded
-    @POST("webservice.php?request=pub_login")
+    @POST("webservice.php?request=user_login")
     Call<UserLoginResponse> userLogin(
-            @Field("email") String email,
-            @Field("password") String password
+            @Field("login_user_name") String email,
+            @Field("login_password") String password
     );
     
     @FormUrlEncoded

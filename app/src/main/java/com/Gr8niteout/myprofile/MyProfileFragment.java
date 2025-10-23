@@ -23,7 +23,9 @@ import com.Gr8niteout.config.CircleTransform;
 import com.Gr8niteout.config.CommonUtilities;
 import com.Gr8niteout.config.MyApplication;
 import com.Gr8niteout.model.SignUpModel;
+import com.Gr8niteout.model.UserLoginResponse;
 import com.Gr8niteout.signup.SignupLogin;
+import com.google.gson.Gson;
 import com.google.android.gms.analytics.HitBuilders;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -43,6 +45,7 @@ public class MyProfileFragment extends Fragment implements View.OnClickListener 
     private RelativeLayout image_layout;
     String userid;
     SignUpModel model;
+    UserLoginResponse userLoginModel;
     MainActivity mActivity;
     private ImageView login;
 
@@ -86,13 +89,24 @@ public class MyProfileFragment extends Fragment implements View.OnClickListener 
         String userDataString = CommonUtilities.getPreference(mActivity, CommonUtilities.pref_UserData);
         if (userDataString != null && !userDataString.isEmpty()) {
             try {
+                // Try to parse as SignUpModel first (for Facebook login)
                 model = new SignUpModel().SignUpModel(userDataString);
+                if (model == null) {
+                    // If SignUpModel parsing fails, try UserLoginResponse (for email/password login)
+                    Gson gson = new Gson();
+                    userLoginModel = gson.fromJson(userDataString, UserLoginResponse.class);
+                    Log.d("MyProfileFragment", "Parsed as UserLoginResponse");
+                } else {
+                    Log.d("MyProfileFragment", "Parsed as SignUpModel");
+                }
             } catch (Exception e) {
                 Log.e("MyProfileFragment", "Error parsing user data: " + e.getMessage());
                 model = null;
+                userLoginModel = null;
             }
         } else {
             model = null;
+            userLoginModel = null;
         }
 
         setFont();
@@ -136,9 +150,9 @@ public class MyProfileFragment extends Fragment implements View.OnClickListener 
             mActivity.mDrawerList.setItemChecked(4, true);
             return true;
         } else if(id == R.id.action_transaction_history){
-            mActivity.selectItem(7);
-            mActivity.mDrawerList.setSelection(-1);
-            mActivity.mDrawerList.setItemChecked(-1, true);
+            mActivity.selectItem(6); // Transaction History is at index 6
+            mActivity.mDrawerList.setSelection(6);
+            mActivity.mDrawerList.setItemChecked(6, true);
             return true;
         }
 
@@ -175,68 +189,190 @@ public class MyProfileFragment extends Fragment implements View.OnClickListener 
         String userDataString = CommonUtilities.getPreference(mActivity, CommonUtilities.pref_UserData);
         if (userDataString != null && !userDataString.isEmpty()) {
             try {
+                // Try to parse as SignUpModel first (for Facebook login)
                 model = new SignUpModel().SignUpModel(userDataString);
+                if (model == null) {
+                    // If SignUpModel parsing fails, try UserLoginResponse (for email/password login)
+                    Gson gson = new Gson();
+                    userLoginModel = gson.fromJson(userDataString, UserLoginResponse.class);
+                    Log.d("MyProfileFragment", "Parsed as UserLoginResponse in onResume");
+                } else {
+                    Log.d("MyProfileFragment", "Parsed as SignUpModel in onResume");
+                }
             } catch (Exception e) {
                 Log.e("MyProfileFragment", "Error parsing user data in onResume: " + e.getMessage());
                 model = null;
+                userLoginModel = null;
             }
         } else {
             model = null;
+            userLoginModel = null;
         }
 
-        if (!CommonUtilities.getPreference(mActivity, CommonUtilities.pref_UserId).equals("") && model != null && model.response != null && model.response.user_data != null) {
+        String userId = CommonUtilities.getPreference(mActivity, CommonUtilities.pref_UserId);
+        Log.d("MyProfileFragment", "User ID from preferences: " + userId);
+        
+        // If user ID is empty, try to extract it from user data
+        if (userId.equals("")) {
+            if (model != null && model.response != null && model.response.user_data != null) {
+                userId = model.response.user_data.user_id;
+                Log.d("MyProfileFragment", "Extracted User ID from SignUpModel: " + userId);
+            } else if (userLoginModel != null && userLoginModel.response != null && userLoginModel.response.responseInfo != null && userLoginModel.response.responseInfo.data != null) {
+                userId = userLoginModel.response.responseInfo.data.user_id;
+                Log.d("MyProfileFragment", "Extracted User ID from UserLoginResponse: " + userId);
+            }
+        }
+        
+        if (!userId.equals("")) {
             loggedIn.setVisibility(View.VISIBLE);
             notLoginLayout.setVisibility(View.GONE);
-            userid = model.response.user_data.user_id;
+            Log.d("MyProfileFragment", "User is logged in, showing profile");
+            
+            // Check if we have SignUpModel data (Facebook login)
+            if (model != null && model.response != null && model.response.user_data != null) {
+                // Full user data available
+                userid = model.response.user_data.user_id;
 
-//            mobileNo.setText("+"+model.response.user_data.getCc_code() + model.response.user_data.getMobile());
+                // Handle mobile number
+                if (model.response.user_data.mobile != null && !model.response.user_data.mobile.equals("")) {
+                    if (model.response.user_data.mobile.length() > 6) {
+                        String main = model.response.user_data.getMobile();
+                        String firstthree = main.substring(0, 3);
+                        String secthree = main.substring(3, 6);
+                        String lastfour = main.substring(6, model.response.user_data.mobile.length());
+                        mobileNo.setText("+" + model.response.user_data.getCc_code() + " " + firstthree + " " + secthree + " " + lastfour);
+                    } else {
+                        mobileNo.setText("+" + model.response.user_data.getCc_code() + " " + model.response.user_data.mobile);
+                    }
+                } else {
+                    mobileNo.setText("Mobile number not available");
+                }
 
-            if (!model.response.user_data.mobile.equals("")) {
+                // Handle user name with good looking text
+                String firstName = model.response.user_data.fname != null ? model.response.user_data.fname : "";
+                String lastName = model.response.user_data.lname != null ? model.response.user_data.lname : "";
+                if (!firstName.isEmpty() && !lastName.isEmpty()) {
+                    userName.setText(firstName + " " + lastName);
+                } else if (!firstName.isEmpty()) {
+                    userName.setText(firstName);
+                } else if (!lastName.isEmpty()) {
+                    userName.setText(lastName);
+                } else {
+                    userName.setText("Welcome User!");
+                }
 
-                if (model.response.user_data.mobile.length() > 6) {
-                    String main = model.response.user_data.getMobile();
-                    String firstthree = main.substring(0, 3);
-                    String secthree = main.substring(3, 6);
-                    String lastfour = main.substring(6, model.response.user_data.mobile.length());
-                    mobileNo.setText("+" + model.response.user_data.getCc_code() + " " + firstthree + " " + secthree + " " + lastfour);
-                } else
-                    mobileNo.setText("+" + model.response.user_data.getCc_code() + " " + model.response.user_data.mobile);
-            }
+                // Handle email
+                if (model.response.user_data.getEmail() != null && !model.response.user_data.getEmail().equals("")) {
+                    email_layout.setVisibility(View.VISIBLE);
+                    line.setVisibility(View.VISIBLE);
+                    email.setText(model.response.user_data.email);
+                } else {
+                    email_layout.setVisibility(View.GONE);
+                    line.setVisibility(View.GONE);
+                }
 
-            userName.setText(model.response.user_data.fname + " " + model.response.user_data.lname);
+                // Handle profile image
+                if (model.response.user_data.photo != null && !model.response.user_data.photo.equals("")) {
+                    First_Lett.setText("");
+                    imgProfile.setImageResource(R.mipmap.no_user);
+                    Picasso.get()
+                            .load(CommonUtilities.Gr8niteoutURL + CommonUtilities.User_Profile_URL + model.response.user_data.photo)
+                            .error(R.mipmap.user)
+                            .transform(new CircleTransform())
+                            .placeholder(R.mipmap.user)
+                            .into(imgProfile, new Callback() {
+                                @Override
+                                public void onSuccess() {
 
-            if (model.response.user_data.getEmail().equals("")) {
+                                }
+
+                                @Override
+                                public void onError(Exception e) {
+
+                                }
+                            });
+                } else {
+                    imgProfile.setImageResource(R.mipmap.no_user);
+                    if (firstName != null && !firstName.isEmpty()) {
+                        First_Lett.setText(firstName.substring(0, 1).toUpperCase());
+                    } else {
+                        First_Lett.setText("U");
+                    }
+                }
+            } else if (userLoginModel != null && userLoginModel.response != null && userLoginModel.response.responseInfo != null && userLoginModel.response.responseInfo.data != null) {
+                // Handle UserLoginResponse data (email/password login)
+                UserLoginResponse.Data userData = userLoginModel.response.responseInfo.data;
+                userid = userData.user_id;
+                Log.d("MyProfileFragment", "Using UserLoginResponse data");
+
+                // Handle mobile number
+                if (userData.mobile_no != null && !userData.mobile_no.equals("")) {
+                    mobileNo.setText(userData.mobile_no);
+                } else {
+                    mobileNo.setText("Mobile number not available");
+                }
+
+                // Handle user name with good looking text
+                String firstName = userData.end_first_name != null ? userData.end_first_name : "";
+                String lastName = userData.end_last_name != null ? userData.end_last_name : "";
+                if (!firstName.isEmpty() && !lastName.isEmpty()) {
+                    userName.setText(firstName + " " + lastName);
+                } else if (!firstName.isEmpty()) {
+                    userName.setText(firstName);
+                } else if (!lastName.isEmpty()) {
+                    userName.setText(lastName);
+                } else {
+                    userName.setText("Welcome User!");
+                }
+
+                // Handle email
+                if (userData.end_email != null && !userData.end_email.equals("")) {
+                    email_layout.setVisibility(View.VISIBLE);
+                    line.setVisibility(View.VISIBLE);
+                    email.setText(userData.end_email);
+                } else {
+                    email_layout.setVisibility(View.GONE);
+                    line.setVisibility(View.GONE);
+                }
+
+                // Handle profile image
+                if (userData.end_profile_pic != null && !userData.end_profile_pic.equals("")) {
+                    First_Lett.setText("");
+                    imgProfile.setImageResource(R.mipmap.no_user);
+                    Picasso.get()
+                            .load(CommonUtilities.Gr8niteoutURL + CommonUtilities.User_Profile_URL + userData.end_profile_pic)
+                            .error(R.mipmap.user)
+                            .transform(new CircleTransform())
+                            .placeholder(R.mipmap.user)
+                            .into(imgProfile, new Callback() {
+                                @Override
+                                public void onSuccess() {
+
+                                }
+
+                                @Override
+                                public void onError(Exception e) {
+
+                                }
+                            });
+                } else {
+                    imgProfile.setImageResource(R.mipmap.no_user);
+                    if (firstName != null && !firstName.isEmpty()) {
+                        First_Lett.setText(firstName.substring(0, 1).toUpperCase());
+                    } else {
+                        First_Lett.setText("U");
+                    }
+                }
+            } else {
+                // Fallback when both models are null but user is logged in
+                userid = userId;
+                userName.setText("Welcome User!");
+                mobileNo.setText("Mobile number not available");
                 email_layout.setVisibility(View.GONE);
                 line.setVisibility(View.GONE);
-            }
-            email.setText(model.response.user_data.email);
-
-//            Log.e("Pic name",model.response.user_data.photo);
-            if (model.response.user_data.photo.equals("")) {
-                // image_layout.setBackgroundResource(R.drawable.round);
-                imgProfile.setImageResource(R.mipmap.no_user);
-                First_Lett.setText(model.response.user_data.getFname().substring(0, 1));
-            } else {
-                First_Lett.setText("");
-//                changed on 28-jan-2019
-                Picasso.get()
-                        .load(CommonUtilities.Gr8niteoutURL + CommonUtilities.User_Profile_URL +
-                                model.response.user_data.photo)
-//                            "")
-                        .error(R.mipmap.user)
-                        .transform(new CircleTransform())
-                        .placeholder(R.mipmap.user) // optional
-                        .into(imgProfile, new Callback() {
-                            @Override
-                            public void onSuccess() {
-
-                            }
-
-                            @Override
-                            public void onError(Exception e) {
-
-                            }
-                        });
+                imgProfile.setImageResource(R.mipmap.user);
+                First_Lett.setText("U");
+                Log.d("MyProfileFragment", "Using fallback data - both models are null");
             }
             edit_prof.setOnClickListener(new View.OnClickListener() {
                 @Override

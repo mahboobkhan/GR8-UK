@@ -31,6 +31,7 @@ import com.Gr8niteout.config.MyApplication;
 import com.Gr8niteout.config.ServerAccess;
 import com.Gr8niteout.model.DrinkModel;
 import com.Gr8niteout.model.SignUpModel;
+import com.Gr8niteout.model.UserLoginResponse;
 import com.Gr8niteout.signup.SignupLogin;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.gson.Gson;
@@ -53,6 +54,7 @@ public class Drinks extends Fragment {
     DrinkModel model;
     DrinkModel modelDrink;
     SignUpModel modelSignup;
+    UserLoginResponse userLoginModel;
     SwipeRefreshLayout swipeRefreshLayout;
     int pageCount = 1, totalCount, threshold = 0;
     ArrayList<DrinkModel.response.drinklist.drinks_lists> list = new ArrayList<>();
@@ -87,7 +89,26 @@ public class Drinks extends Fragment {
         lin_dialog =  v.findViewById(R.id.lin_dialog);
         CommonUtilities.setFontFamily(mActivity, textStatic_login, CommonUtilities.AvenirLTStd_Medium);
         btnLogin = (ImageView) v.findViewById(R.id.btn_login);
-        modelSignup = new SignUpModel().SignUpModel(CommonUtilities.getPreference(mActivity, CommonUtilities.pref_UserData));
+        // Safely parse user data with null checks
+        String userDataString = CommonUtilities.getPreference(mActivity, CommonUtilities.pref_UserData);
+        if (userDataString != null && !userDataString.isEmpty()) {
+            try {
+                // Try to parse as SignUpModel first (for Facebook login)
+                modelSignup = new SignUpModel().SignUpModel(userDataString);
+                if (modelSignup == null) {
+                    // If SignUpModel parsing fails, try UserLoginResponse (for email/password login)
+                    Gson gson = new Gson();
+                    userLoginModel = gson.fromJson(userDataString, UserLoginResponse.class);
+                }
+            } catch (Exception e) {
+                // Handle parsing errors gracefully
+                modelSignup = null;
+                userLoginModel = null;
+            }
+        } else {
+            modelSignup = null;
+            userLoginModel = null;
+        }
         setHasOptionsMenu(true);
         listDrinks = (RecyclerView) v.findViewById(recycler_view);
         swipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.swiperefresh);
@@ -187,7 +208,15 @@ public class Drinks extends Fragment {
 
         Map<String, String> params = new HashMap<String, String>();
         params.put(CommonUtilities.key_user_id, CommonUtilities.getPreference(mActivity, CommonUtilities.pref_UserId));
-        params.put(CommonUtilities.key_email, modelSignup.response.user_data.email);
+        
+        // Safely get email from user data
+        String email = "";
+        if (modelSignup != null && modelSignup.response != null && modelSignup.response.user_data != null) {
+            email = modelSignup.response.user_data.email != null ? modelSignup.response.user_data.email : "";
+        } else if (userLoginModel != null && userLoginModel.response != null && userLoginModel.response.responseInfo != null && userLoginModel.response.responseInfo.data != null) {
+            email = userLoginModel.response.responseInfo.data.end_email != null ? userLoginModel.response.responseInfo.data.end_email : "";
+        }
+        params.put(CommonUtilities.key_email, email);
 //        params.put(CommonUtilities.key_mobile, modelSignup.response.user_data.mobile);
         params.put(CommonUtilities.key_page_no, String.valueOf(pageCountt));
 
@@ -361,10 +390,28 @@ public class Drinks extends Fragment {
         if (!CommonUtilities.getPreference(mActivity, CommonUtilities.pref_UserId).equals("")) {
             listviewLayout.setVisibility(View.VISIBLE);
             notLoginLayout.setVisibility(View.GONE);
-            userid = modelSignup.response.user_data.user_id;
-            pageCount = 1;
-            list.clear();
-            getDrinkList(pageCount, true);
+            
+            // Safely get user ID from user data
+            String userId = CommonUtilities.getPreference(mActivity, CommonUtilities.pref_UserId);
+            if (userId.equals("")) {
+                // Try to extract from user data if pref_UserId is empty
+                if (modelSignup != null && modelSignup.response != null && modelSignup.response.user_data != null) {
+                    userId = modelSignup.response.user_data.user_id != null ? modelSignup.response.user_data.user_id : "";
+                } else if (userLoginModel != null && userLoginModel.response != null && userLoginModel.response.responseInfo != null && userLoginModel.response.responseInfo.data != null) {
+                    userId = userLoginModel.response.responseInfo.data.user_id != null ? userLoginModel.response.responseInfo.data.user_id : "";
+                }
+            }
+            
+            if (!userId.equals("")) {
+                userid = userId;
+                pageCount = 1;
+                list.clear();
+                getDrinkList(pageCount, true);
+            } else {
+                // If no user ID available, show login layout
+                listviewLayout.setVisibility(View.GONE);
+                notLoginLayout.setVisibility(View.VISIBLE);
+            }
         } else if (CommonUtilities.getPreference(mActivity, CommonUtilities.pref_UserId).equals("")) {
             listviewLayout.setVisibility(View.GONE);
             notLoginLayout.setVisibility(View.VISIBLE);

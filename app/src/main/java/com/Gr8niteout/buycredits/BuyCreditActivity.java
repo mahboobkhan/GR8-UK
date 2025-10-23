@@ -26,7 +26,10 @@ import com.Gr8niteout.config.CommonUtilities;
 import com.Gr8niteout.config.RoundImageview;
 import com.Gr8niteout.config.RoundedTransformation;
 import com.Gr8niteout.model.SignUpModel;
+import com.Gr8niteout.model.UserLoginResponse;
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+import android.util.Log;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -120,20 +123,30 @@ public class BuyCreditActivity extends AppCompatActivity {
             txtPubName.setText(getIntent().getExtras().getString(CommonUtilities.key_pub_name));
 
             From = getIntent().getStringExtra("from");
-            Picasso.get()
-                    .load(getIntent().getExtras().getString(CommonUtilities.key_pub_image))
-                    .into(imgPub, new Callback() {
-                        @Override
-                        public void onSuccess() {
-                            imgPlaceHolder.setVisibility(View.GONE);
-                            layoutGray.setVisibility(View.VISIBLE);
-                        }
+            
+            // Safely load pub image with empty path check
+            String pubImagePath = getIntent().getExtras().getString(CommonUtilities.key_pub_image);
+            if (pubImagePath != null && !pubImagePath.isEmpty()) {
+                Picasso.get()
+                        .load(pubImagePath)
+                        .into(imgPub, new Callback() {
+                            @Override
+                            public void onSuccess() {
+                                imgPlaceHolder.setVisibility(View.GONE);
+                                layoutGray.setVisibility(View.VISIBLE);
+                            }
 
                         @Override
                         public void onError(Exception e) {
                             imgPlaceHolder.setVisibility(View.GONE);
                         }
                     });
+            } else {
+                // Handle case when no pub image is available
+                Log.d("BuyCreditActivity", "No pub image available, using placeholder");
+                imgPlaceHolder.setVisibility(View.GONE);
+                layoutGray.setVisibility(View.VISIBLE);
+            }
 
             if (getIntent().getExtras().getString("currency").equals("1")) {
                 btnCurrency.setText("GBP");
@@ -155,16 +168,81 @@ public class BuyCreditActivity extends AppCompatActivity {
             layoutLoggedIn.setVisibility(View.GONE);
             layoutNotLoggedIn.setVisibility(View.VISIBLE);
         } else {
-            signUpModel = new SignUpModel().SignUpModel(CommonUtilities.getPreference(BuyCreditActivity.this, CommonUtilities.pref_UserData));
-            txtName.setText(signUpModel.response.user_data.fname + " " + signUpModel.response.user_data.lname);
-            txtEmail.setText(signUpModel.response.user_data.email);
-            if (signUpModel.response.user_data.getPhoto().equals("")) {
+            // Safely parse user data with null checks
+            String userDataString = CommonUtilities.getPreference(BuyCreditActivity.this, CommonUtilities.pref_UserData);
+            if (userDataString != null && !userDataString.isEmpty()) {
+                try {
+                    // Check if this is email/password login data by looking for ResponseInfo structure
+                    if (userDataString.contains("ResponseInfo") && userDataString.contains("end_first_name")) {
+                        // This is email/password login data, use UserLoginResponse
+                        Gson gson = new Gson();
+                        UserLoginResponse userLoginModel = gson.fromJson(userDataString, UserLoginResponse.class);
+                        
+                        if (userLoginModel != null && userLoginModel.response != null && userLoginModel.response.responseInfo != null && userLoginModel.response.responseInfo.data != null) {
+                            String firstName = userLoginModel.response.responseInfo.data.end_first_name != null ? userLoginModel.response.responseInfo.data.end_first_name : "";
+                            String lastName = userLoginModel.response.responseInfo.data.end_last_name != null ? userLoginModel.response.responseInfo.data.end_last_name : "";
+                            String email = userLoginModel.response.responseInfo.data.end_email != null ? userLoginModel.response.responseInfo.data.end_email : "";
+                            
+                            if (!firstName.isEmpty() && !lastName.isEmpty()) {
+                                txtName.setText(firstName + " " + lastName);
+                            } else if (!firstName.isEmpty()) {
+                                txtName.setText(firstName);
+                            } else {
+                                txtName.setText("User");
+                            }
+                            txtEmail.setText(email);
+                        } else {
+                            txtName.setText("User");
+                            txtEmail.setText("");
+                        }
+                    } else {
+                        // This is Facebook login data, use SignUpModel
+                        signUpModel = new SignUpModel().SignUpModel(userDataString);
+                        
+                        if (signUpModel != null && signUpModel.response != null && signUpModel.response.user_data != null) {
+                            String firstName = signUpModel.response.user_data.fname != null ? signUpModel.response.user_data.fname : "";
+                            String lastName = signUpModel.response.user_data.lname != null ? signUpModel.response.user_data.lname : "";
+                            String email = signUpModel.response.user_data.email != null ? signUpModel.response.user_data.email : "";
+                            
+                            if (!firstName.isEmpty() && !lastName.isEmpty()) {
+                                txtName.setText(firstName + " " + lastName);
+                            } else if (!firstName.isEmpty()) {
+                                txtName.setText(firstName);
+                            } else {
+                                txtName.setText("User");
+                            }
+                            txtEmail.setText(email);
+                        } else {
+                            txtName.setText("User");
+                            txtEmail.setText("");
+                        }
+                    }
+                } catch (Exception e) {
+                    Log.e("BuyCreditActivity", "Error parsing user data: " + e.getMessage());
+                    txtName.setText("User");
+                    txtEmail.setText("");
+                }
+            } else {
+                txtName.setText("User");
+                txtEmail.setText("");
+            }
+            
+            // Handle profile image safely
+            String profilePhoto = "";
+            String firstName = "";
+            
+            if (signUpModel != null && signUpModel.response != null && signUpModel.response.user_data != null) {
+                profilePhoto = signUpModel.response.user_data.getPhoto() != null ? signUpModel.response.user_data.getPhoto() : "";
+                firstName = signUpModel.response.user_data.fname != null ? signUpModel.response.user_data.fname : "";
+            }
+            
+            if (profilePhoto.equals("")) {
 //                imgProfile.setImageResource(R.mipmap.no_user);
                 img_layout.setBackgroundResource(R.drawable.round);
                 imgProfile.setVisibility(View.GONE);
-                if (!signUpModel.response.user_data.getFname().equals("")) {
+                if (!firstName.equals("") && firstName.length() > 0) {
                     txt_first_name.setVisibility(View.VISIBLE);
-                    txt_first_name.setText(signUpModel.response.user_data.getFname().substring(0, 1));
+                    txt_first_name.setText(firstName.substring(0, 1));
                 } else {
                     imgProfile.setImageResource(R.mipmap.user);
                     txt_first_name.setVisibility(View.GONE);
@@ -173,7 +251,7 @@ public class BuyCreditActivity extends AppCompatActivity {
                 txt_first_name.setVisibility(View.GONE);
 //                changed on 28-jan-2019
                 Picasso.get()
-                        .load(CommonUtilities.Gr8niteoutURL + CommonUtilities.User_Profile_URL + signUpModel.response.user_data.photo)
+                        .load(CommonUtilities.Gr8niteoutURL + CommonUtilities.User_Profile_URL + profilePhoto)
                         .error(R.mipmap.user).placeholder(R.mipmap.user) // optional
                         .transform(new CircleTransform())
                         .into(imgProfile, new Callback() {

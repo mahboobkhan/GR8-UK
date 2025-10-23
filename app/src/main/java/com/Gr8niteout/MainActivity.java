@@ -36,12 +36,14 @@ import com.Gr8niteout.config.ServerAccess;
 import com.Gr8niteout.home.HomeFragment;
 import com.Gr8niteout.model.Logout_Model;
 import com.Gr8niteout.model.SignUpModel;
+import com.Gr8niteout.model.UserLoginResponse;
 import com.Gr8niteout.myprofile.MyProfileFragment;
+import com.google.gson.Gson;
 import com.Gr8niteout.myprofile.UserTransactionHistoryFragment;
 import com.Gr8niteout.search.SearchFragment;
 import com.Gr8niteout.setting.SettingFragment;
 import com.Gr8niteout.signup.SignupLogin;
-import com.facebook.FacebookSdk;
+// Facebook imports removed
 import com.facebook.login.LoginManager;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -83,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
 //    @BindView(R.id.goImage)
     public ImageView goImage;
     SignUpModel model;
+    UserLoginResponse userLoginModel;
     LocationManager locationManager;
     public int selectedPos, prevPos = -1;
     public static boolean isExit = false;
@@ -92,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FacebookSdk.isInitialized();
+        // Facebook initialization removed
         act = MainActivity.this;
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -509,35 +512,118 @@ public class MainActivity extends AppCompatActivity {
 
             imgItems.add(R.drawable.slider_logout);
             imgItems.add(R.drawable.baseline_history_24);
-            model = new SignUpModel().SignUpModel(CommonUtilities.getPreference(MainActivity.this, CommonUtilities.pref_UserData));
-            CommonUtilities.setFontFamily(MainActivity.this, txtFullname, CommonUtilities.Avenir_Heavy);
-            txtFullname.setText(model.response.user_data.fname + " " + model.response.user_data.lname);
-
-            if (model.response.user_data.getPhoto().equals("")) {
-                imgProfile.setImageResource(R.mipmap.no_user);
-                if (!model.response.user_data.getFname().equals("")) {
-                    textname.setText(model.response.user_data.getFname().substring(0, 1));
-                } else {
-                    imgProfile.setImageResource(R.mipmap.user);
+            
+            // Safely parse user data with null checks
+            String userDataString = CommonUtilities.getPreference(MainActivity.this, CommonUtilities.pref_UserData);
+            if (userDataString != null && !userDataString.isEmpty()) {
+                try {
+                    // Try to parse as SignUpModel first (for Facebook login)
+                    model = new SignUpModel().SignUpModel(userDataString);
+                    if (model == null) {
+                        // If SignUpModel parsing fails, try UserLoginResponse (for email/password login)
+                        Gson gson = new Gson();
+                        userLoginModel = gson.fromJson(userDataString, UserLoginResponse.class);
+                    }
+                } catch (Exception e) {
+                    // Handle parsing errors gracefully
+                    model = null;
+                    userLoginModel = null;
                 }
             } else {
-                textname.setText("");
-//                changed on 28-jan-2019
-                Picasso.get()
-                        .load(CommonUtilities.Gr8niteoutURL + CommonUtilities.User_Profile_URL + model.response.user_data.photo)
-                        .error(R.mipmap.user).placeholder(R.mipmap.user) // optional
-                        .transform(new CircleTransform())
-                        .into(imgProfile, new Callback() {
-                            @Override
-                            public void onSuccess() {
-                                Log.e("success", "success");
-                            }
+                model = null;
+                userLoginModel = null;
+            }
+            
+            CommonUtilities.setFontFamily(MainActivity.this, txtFullname, CommonUtilities.Avenir_Heavy);
+            
+            // Set user name with null checks
+            if (model != null && model.response != null && model.response.user_data != null) {
+                String firstName = model.response.user_data.fname != null ? model.response.user_data.fname : "";
+                String lastName = model.response.user_data.lname != null ? model.response.user_data.lname : "";
+                if (!firstName.isEmpty() && !lastName.isEmpty()) {
+                    txtFullname.setText(firstName + " " + lastName);
+                } else if (!firstName.isEmpty()) {
+                    txtFullname.setText(firstName);
+                } else if (!lastName.isEmpty()) {
+                    txtFullname.setText(lastName);
+                } else {
+                    txtFullname.setText("User");
+                }
+            } else if (userLoginModel != null && userLoginModel.response != null && userLoginModel.response.responseInfo != null && userLoginModel.response.responseInfo.data != null) {
+                String firstName = userLoginModel.response.responseInfo.data.end_first_name != null ? userLoginModel.response.responseInfo.data.end_first_name : "";
+                String lastName = userLoginModel.response.responseInfo.data.end_last_name != null ? userLoginModel.response.responseInfo.data.end_last_name : "";
+                if (!firstName.isEmpty() && !lastName.isEmpty()) {
+                    txtFullname.setText(firstName + " " + lastName);
+                } else if (!firstName.isEmpty()) {
+                    txtFullname.setText(firstName);
+                } else if (!lastName.isEmpty()) {
+                    txtFullname.setText(lastName);
+                } else {
+                    txtFullname.setText("User");
+                }
+            } else {
+                txtFullname.setText("User");
+            }
 
-                            @Override
-                            public void onError(Exception e) {
-                                Log.e("error", "error");
-                            }
-                        });
+            // Handle profile image with null checks
+            if (model != null && model.response != null && model.response.user_data != null) {
+                if (model.response.user_data.getPhoto() == null || model.response.user_data.getPhoto().equals("")) {
+                    imgProfile.setImageResource(R.mipmap.no_user);
+                    if (model.response.user_data.getFname() != null && !model.response.user_data.getFname().equals("")) {
+                        textname.setText(model.response.user_data.getFname().substring(0, 1));
+                    } else {
+                        imgProfile.setImageResource(R.mipmap.user);
+                        textname.setText("U");
+                    }
+                } else {
+                    textname.setText("");
+                    Picasso.get()
+                            .load(CommonUtilities.Gr8niteoutURL + CommonUtilities.User_Profile_URL + model.response.user_data.photo)
+                            .error(R.mipmap.user).placeholder(R.mipmap.user)
+                            .transform(new CircleTransform())
+                            .into(imgProfile, new Callback() {
+                                @Override
+                                public void onSuccess() {
+                                    Log.e("success", "success");
+                                }
+
+                                @Override
+                                public void onError(Exception e) {
+                                    Log.e("error", "error");
+                                }
+                            });
+                }
+            } else if (userLoginModel != null && userLoginModel.response != null && userLoginModel.response.responseInfo != null && userLoginModel.response.responseInfo.data != null) {
+                if (userLoginModel.response.responseInfo.data.end_profile_pic == null || userLoginModel.response.responseInfo.data.end_profile_pic.equals("")) {
+                    imgProfile.setImageResource(R.mipmap.no_user);
+                    if (userLoginModel.response.responseInfo.data.end_first_name != null && !userLoginModel.response.responseInfo.data.end_first_name.equals("")) {
+                        textname.setText(userLoginModel.response.responseInfo.data.end_first_name.substring(0, 1));
+                    } else {
+                        imgProfile.setImageResource(R.mipmap.user);
+                        textname.setText("U");
+                    }
+                } else {
+                    textname.setText("");
+                    Picasso.get()
+                            .load(CommonUtilities.Gr8niteoutURL + CommonUtilities.User_Profile_URL + userLoginModel.response.responseInfo.data.end_profile_pic)
+                            .error(R.mipmap.user).placeholder(R.mipmap.user)
+                            .transform(new CircleTransform())
+                            .into(imgProfile, new Callback() {
+                                @Override
+                                public void onSuccess() {
+                                    Log.e("success", "success");
+                                }
+
+                                @Override
+                                public void onError(Exception e) {
+                                    Log.e("error", "error");
+                                }
+                            });
+                }
+            } else {
+                // Default profile for logged in user without model data
+                imgProfile.setImageResource(R.mipmap.user);
+                textname.setText("U");
             }
 
         }

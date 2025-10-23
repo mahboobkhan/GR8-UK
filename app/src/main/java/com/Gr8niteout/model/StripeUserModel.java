@@ -17,6 +17,16 @@ public class StripeUserModel {
         public String cancel_url;
         public String success_url;
         public String url;
+        public error error;
+        
+        public class error{
+            public String code;
+            public String doc_url;
+            public String message;
+            public String param;
+            public String request_log_url;
+            public String type;
+        }
     }
 
 }

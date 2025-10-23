@@ -266,38 +266,69 @@ public class UserSignUpActivity extends AppCompatActivity {
                                     return;
                                 }
                                 
-                                // Store user data
+                                // Store user data following Facebook login pattern
                                 if (signUpResponse.response.responseInfo.data != null && 
                                     signUpResponse.response.responseInfo.data.userDetails != null) {
                                     
                                     UserSignUpResponse.UserDetails userDetails = signUpResponse.response.responseInfo.data.userDetails;
                                     
-                                    // Store user ID
+                                    // Store user ID (like Facebook login)
                                     if (userDetails.user_id != null && !userDetails.user_id.isEmpty()) {
                                         CommonUtilities.setPreference(UserSignUpActivity.this, 
                                                 CommonUtilities.pref_UserId, userDetails.user_id);
+                                        Log.d("UserSignUp", "User ID stored successfully: " + userDetails.user_id);
+                                    } else {
+                                        Log.d("UserSignUp", "User ID is null or empty");
                                     }
                                     
-                                    // Store access token if available
+                                    // Store access token if available (like Facebook login)
                                     if (userDetails.access_token != null && !userDetails.access_token.isEmpty()) {
                                         CommonUtilities.setSecurity_Preference(UserSignUpActivity.this, 
                                                 CommonUtilities.key_security_toekn, userDetails.access_token);
                                     }
                                     
-                                    // Store user data as JSON string
+                                    // Store user data as JSON string (like Facebook login)
                                     Gson gson = new Gson();
                                     String userDataJson = gson.toJson(response.body());
                                     CommonUtilities.setPreference(UserSignUpActivity.this, 
                                             CommonUtilities.pref_UserData, userDataJson);
                                     
+                                    // Debug: Verify preferences are set
+                                    String storedUserId = CommonUtilities.getPreference(UserSignUpActivity.this, CommonUtilities.pref_UserId);
+                                    String storedUserData = CommonUtilities.getPreference(UserSignUpActivity.this, CommonUtilities.pref_UserData);
+                                    Log.d("UserSignUp", "Stored User ID: " + storedUserId);
+                                    Log.d("UserSignUp", "Stored User Data length: " + (storedUserData != null ? storedUserData.length() : "null"));
+                                    
                                     String successMsg = signUpResponse.response.responseInfo.msg != null ? 
                                             signUpResponse.response.responseInfo.msg : "Sign up successful!";
                                     CommonUtilities.ShowToast(UserSignUpActivity.this, successMsg);
                                     
-                                    // Navigate to MainActivity
+                                    // Navigate to MainActivity following Facebook login pattern
                                     Intent i = new Intent(UserSignUpActivity.this, MainActivity.class);
+                                    
+                                    // Handle different flags like Facebook login
+                                    if (getIntent().getExtras() != null && getIntent().getExtras().containsKey(CommonUtilities.key_flag)) {
+                                        String flag = getIntent().getExtras().getString(CommonUtilities.key_flag);
+                                        if (flag.equals(CommonUtilities.flag_drinks)) {
+                                            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                            i.putExtra(CommonUtilities.key_flag, CommonUtilities.flag_drinks);
+                                        } else if (flag.equals(CommonUtilities.flag_birtday)) {
+                                            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                            i.putExtra(CommonUtilities.key_flag, CommonUtilities.flag_birtday);
+                                            CommonUtilities.setPreference(UserSignUpActivity.this, CommonUtilities.pref_from_birthday, "true");
+                                        } else if (flag.equals(CommonUtilities.flag_comment)) {
+                                            Intent intent = new Intent();
+                                            setResult(RESULT_OK, intent);
+                                            finish();
+                                            return;
+                                        } else if (flag.equals(CommonUtilities.flag_my_profile)) {
+                                            i.putExtra(CommonUtilities.key_flag, CommonUtilities.flag_my_profile);
+                                            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                        }
+                                    }
+                                    
                                     startActivity(i);
-                                    finishAffinity();
+                                    finish();
                                 } else {
                                     CommonUtilities.ShowToast(UserSignUpActivity.this, "Invalid response data");
                                 }

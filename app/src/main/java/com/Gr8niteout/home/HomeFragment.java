@@ -42,7 +42,9 @@ import com.Gr8niteout.config.MyApplication;
 import com.Gr8niteout.config.ServerAccess;
 import com.Gr8niteout.model.HomeData;
 import com.Gr8niteout.model.SignUpModel;
+import com.Gr8niteout.model.UserLoginResponse;
 import com.Gr8niteout.pub.PubActivity;
+import com.google.gson.Gson;
 import com.Gr8niteout.signup.SignupLogin;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.analytics.HitBuilders;
@@ -71,6 +73,7 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
     TextView txtNewest;
 
     SignUpModel signUpModel;
+    UserLoginResponse userLoginModel;
 
     ViewPager pagerBanner;
     private LinearLayout viewPagerCountDots;
@@ -244,7 +247,7 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
                 model = new HomeData().HomeData(result);
                 if (model != null) {
                     if (model.response.status.equals(CommonUtilities.key_Success)) {
-                        if ("1".equals(model.response.home_data.user_status) || model.response.home_data.user_status.equals("")) {
+                        if ("1".equals(model.response.home_data.user_status) || model.response.home_data.user_status == null || (model.response.home_data.user_status != null && model.response.home_data.user_status.equals(""))) {
                             CommonUtilities.setPreference(mActivity, CommonUtilities.pref_homedata, result);
                             adapter = new ViewPagerAdapter(mActivity, model.response.home_data.banner);
                             pagerBanner.setAdapter(adapter);
@@ -384,7 +387,7 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    if (!listBanner.get(position).banner_url.equals("")) {
+                    if (listBanner.get(position).banner_url != null && !listBanner.get(position).banner_url.equals("")) {
                         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(listBanner.get(position).banner_url));
                         startActivity(browserIntent);
                     }
@@ -403,9 +406,49 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
     public void setDetails() {
 
         if (!CommonUtilities.getPreference(mActivity, CommonUtilities.pref_UserId).equals("")) {
-            signUpModel = new SignUpModel().SignUpModel(CommonUtilities.getPreference(mActivity, CommonUtilities.pref_UserData));
-            txtName.setVisibility(View.VISIBLE);
-            txtName.setText(signUpModel.response.user_data.fname + ".");
+            // Safely parse user data with null checks
+            String userDataString = CommonUtilities.getPreference(mActivity, CommonUtilities.pref_UserData);
+            if (userDataString != null && !userDataString.isEmpty()) {
+                try {
+                    // Try to parse as SignUpModel first (for Facebook login)
+                    signUpModel = new SignUpModel().SignUpModel(userDataString);
+                    if (signUpModel != null && signUpModel.response != null && signUpModel.response.user_data != null) {
+                        txtName.setVisibility(View.VISIBLE);
+                        String firstName = signUpModel.response.user_data.fname != null ? signUpModel.response.user_data.fname : "";
+                        if (!firstName.isEmpty()) {
+                            txtName.setText(firstName + ".");
+                        } else {
+                            txtName.setText("User.");
+                        }
+                    } else {
+                        // Try UserLoginResponse (for email/password login)
+                        Gson gson = new Gson();
+                        userLoginModel = gson.fromJson(userDataString, UserLoginResponse.class);
+                        if (userLoginModel != null && userLoginModel.response != null && userLoginModel.response.responseInfo != null && userLoginModel.response.responseInfo.data != null) {
+                            txtName.setVisibility(View.VISIBLE);
+                            String firstName = userLoginModel.response.responseInfo.data.end_first_name != null ? userLoginModel.response.responseInfo.data.end_first_name : "";
+                            if (!firstName.isEmpty()) {
+                                txtName.setText(firstName + ".");
+                            } else {
+                                txtName.setText("User.");
+                            }
+                        } else {
+                            // Fallback when both models are null but user is logged in
+                            txtName.setVisibility(View.VISIBLE);
+                            txtName.setText("User.");
+                        }
+                    }
+                } catch (Exception e) {
+                    Log.e("HomeFragment", "Error parsing user data: " + e.getMessage());
+                    // Fallback when parsing fails but user is logged in
+                    txtName.setVisibility(View.VISIBLE);
+                    txtName.setText("User.");
+                }
+            } else {
+                // Fallback when no user data but user is logged in
+                txtName.setVisibility(View.VISIBLE);
+                txtName.setText("User.");
+            }
         } else {
             txtHello.setText("Hello,");
             txtName.setText("Good Looking.");

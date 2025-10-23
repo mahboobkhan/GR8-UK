@@ -47,17 +47,7 @@ import com.android.billingclient.api.BillingResult;
 import com.android.billingclient.api.Purchase;
 import com.android.billingclient.api.PurchasesUpdatedListener;
 import com.android.billingclient.api.QueryPurchasesParams;
-import com.facebook.AccessToken;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.login.LoginBehavior;
-import com.facebook.login.LoginManager;
-import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
+// Facebook imports removed
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.firebase.messaging.FirebaseMessaging;
 //import com.google.firebase.iid.FirebaseInstanceId;
@@ -89,8 +79,7 @@ public class SignupLogin extends AppCompatActivity implements Animation.Animatio
 //    @BindView(R.id.Layout)
     LinearLayout Layout;
 
-//    @BindView(R.id.login_button)
-    LoginButton loginButton;
+// Facebook login button removed
 
 //    @BindView(R.id.textView2)
     TextView textView2;
@@ -112,8 +101,7 @@ public class SignupLogin extends AppCompatActivity implements Animation.Animatio
     Button btn_fb_custom;
     Button btn_pub_login;
     Button sub_btn_pub;
-    CallbackManager callbackManager;
-    AccessToken accessToken;
+    // Facebook related variables removed
     SignUpModel model;
     Map<String, String> params = new HashMap<String, String>();
     String[] PERMISSIONS = {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION};
@@ -129,13 +117,11 @@ public class SignupLogin extends AppCompatActivity implements Animation.Animatio
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_signup);
-        Log.d("FacebookLogin", "on create sign up");
+        Log.d("SignupLogin", "on create sign up");
         ButterKnife.bind(this);
 
         Layout = findViewById(R.id.Layout);
-        loginButton = findViewById(R.id.login_button);
         textView2 = findViewById(R.id.textView2);
         textTerms = findViewById(R.id.textTerms);
         textView3 = findViewById(R.id.textView3);
@@ -143,10 +129,6 @@ public class SignupLogin extends AppCompatActivity implements Animation.Animatio
         textSkip = findViewById(R.id.textSkip);
         textByRegistering = findViewById(R.id.textByRegistering);
         btn_fb_custom = findViewById(R.id.btn_fb_custom);
-
-
-        //btn_fb_custom.setOnClickListener(this);
-        callbackManager = CallbackManager.Factory.create();
         setFont();
         final Animation animFadein = AnimationUtils.loadAnimation(getApplicationContext(),
                 R.anim.slideltor);
@@ -460,86 +442,7 @@ public class SignupLogin extends AppCompatActivity implements Animation.Animatio
                     // You can now use this token to send notifications to this device.
                 });
     }
-    public void FBtnClick(View v){
-        if (AccessToken.getCurrentAccessToken() != null) {
-            LoginManager.getInstance().logOut();
-        }
-        Log.d("FacebookLogin", "button clicked");
-        callbackManager = CallbackManager.Factory.create();
-
-        LoginManager.getInstance().setLoginBehavior(LoginBehavior.WEB_ONLY).registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                Log.d("FacebookLogin", "facebook:onSuccess:" + loginResult);
-                accessToken = loginResult.getAccessToken();
-
-                GraphRequest request = GraphRequest.newMeRequest(
-                        loginResult.getAccessToken(),
-                        new GraphRequest.GraphJSONObjectCallback() {
-                            @Override
-                            public void onCompleted(
-                                    JSONObject object,
-                                    GraphResponse response) {
-
-                                Log.d("FacebookLogin","on completed block");
-                                Log.d("FacebookLogin",response.toString());
-                                Log.d("FacebookLogin",object.toString());
-                                Log.d("FacebookLoginGenerate_token",generate_token);
-
-                                if (response != null) {
-                                    try {
-//                                        Log.d("myBirthday",object.getString("birthday"));
-                                        Log.d("FacebookLogin",object.toString());
-                                        Log.d("FacebookLogin",response.toString());
-                                        params.put(CommonUtilities.key_encoded_key, SplashScreen.random_function());
-                                        params.put(CommonUtilities.key_timezone, getCurrentTimezoneOffset());
-                                        params.put(CommonUtilities.pref_fb_id, object.getString("id"));
-//                                        params.put(CommonUtilities.key_pushnotification_toekn, CommonUtilities.getPreference(getApplicationContext(), CommonUtilities.pref_push_token));
-//                                        params.put(CommonUtilities.key_pushnotification_toekn,getIntent().getStringExtra("token"));
-                                        params.put(CommonUtilities.key_pushnotification_toekn,generate_token);
-                                        params.put(CommonUtilities.pref_fb_birthday, object.isNull("birthday") ? "" : object.getString("birthday"));
-                                        params.put(CommonUtilities.pref_fb_fname, object.getString("first_name"));
-                                        params.put(CommonUtilities.pref_fb_lname, object.getString("last_name"));
-                                        params.put(CommonUtilities.pref_fb_photo, object.getJSONObject("picture").getJSONObject("data").getString("url"));
-                                        params.put(CommonUtilities.pref_fb_gender, object.isNull("gender") ? "" :
-                                                object.getString("gender"));
-                                        params.put(CommonUtilities.pref_fb_email, object.isNull("email") ? "" :
-                                                object.getString("email"));
-                                        params.put(CommonUtilities.key_udid, Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID));
-                                        params.put(CommonUtilities.key_security_toekn, CommonUtilities.getSecurity_Preference(getApplicationContext(), CommonUtilities.key_security_toekn));
-                                        params.put(CommonUtilities.key_device_type, "2");
-                                        params.put(CommonUtilities.key_app_version, BuildConfig.VERSION_NAME);
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
-                                    }
-                                }else{
-                                    Log.d("FacebookLogin","else block");
-                                }
-
-                                login_fb_call();
-                            }
-                        });
-//                gender,user_birthday
-                Bundle parameters = new Bundle();
-                parameters.putString("fields", "id,email,first_name,birthday,last_name,gender,picture.width(300).height(300),verified");
-                request.setParameters(parameters);
-                request.executeAsync();
-            }
-
-            @Override
-            public void onCancel() {
-                Log.d("FacebookLogin", "facebook:onCancel");
-            }
-
-            @Override
-            public void onError(FacebookException error) {
-                Log.d("FacebookLogin", "facebook:onError", error);
-            }
-        });
-
-        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "email", "user_birthday"));
-
-    }
+    // Facebook login method removed
 
     public String getCurrentTimezoneOffset() {
 
@@ -557,7 +460,6 @@ public class SignupLogin extends AppCompatActivity implements Animation.Animatio
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 111 && resultCode == RESULT_OK) {
             Intent intent = new Intent();

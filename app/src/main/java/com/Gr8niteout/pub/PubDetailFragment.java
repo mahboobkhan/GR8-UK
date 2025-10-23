@@ -197,13 +197,20 @@ public class PubDetailFragment extends Fragment implements ViewPager.OnPageChang
             @Override
             public void onClick(View v) {
                 if (!txtBuyCredits.getText().equals(creditNotAvailableMsg))
-                    if (model != null) {
+                    if (model != null && model.response != null && model.response.pub_profile != null) {
 
-                        Log.d("Image", "onClick: "+model.response.pub_profile.banner_array.get(0));
+                        // Safely get banner image with bounds checking
+                        String bannerImage = "";
+                        if (model.response.pub_profile.banner_array != null && model.response.pub_profile.banner_array.size() > 0) {
+                            bannerImage = model.response.pub_profile.banner_array.get(0);
+                            Log.d("Image", "onClick: " + bannerImage);
+                        } else {
+                            Log.d("Image", "onClick: No banner images available");
+                        }
 
                         Intent i = new Intent(mActivity, BuyCreditActivity.class);
                         i.putExtra(CommonUtilities.key_pub_name, model.response.pub_profile.pub_name);
-                        i.putExtra(CommonUtilities.key_pub_image, model.response.pub_profile.banner_array.get(0));
+                        i.putExtra(CommonUtilities.key_pub_image, bannerImage);
                         i.putExtra(CommonUtilities.key_pub_id, model.response.pub_profile.pub_id);
                         i.putExtra("currency", model.response.pub_profile.currency);
                         i.putExtra("from", "Details");

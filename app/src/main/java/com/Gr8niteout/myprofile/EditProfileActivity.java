@@ -38,6 +38,7 @@ import com.Gr8niteout.config.RoundImageview;
 import com.Gr8niteout.config.ServerAccess;
 import com.Gr8niteout.model.Edit_Profile_Model;
 import com.Gr8niteout.model.SignUpModel;
+import com.Gr8niteout.model.UserLoginResponse;
 import com.Gr8niteout.signup.SignUpMobile;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.gson.Gson;
@@ -105,6 +106,7 @@ public class EditProfileActivity extends AppCompatActivity {
 //    @BindView(R.id.First_Lett)
     TextView First_Lett;
     SignUpModel model;
+    UserLoginResponse userLoginModel;
     String prof_img = "";
     Edit_Profile_Model model2;
 
@@ -133,6 +135,7 @@ public class EditProfileActivity extends AppCompatActivity {
         txtEditProfile = findViewById(R.id.txtEditProfile);
         image_layout = findViewById(R.id.image_layout);
         First_Lett = findViewById(R.id.First_Lett);
+        txtSave = findViewById(R.id.txtSave);
 
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
@@ -149,15 +152,90 @@ public class EditProfileActivity extends AppCompatActivity {
 
         setFont();
 
-        model = new SignUpModel().SignUpModel(CommonUtilities.getPreference(EditProfileActivity.this, CommonUtilities.pref_UserData));
+        // Safely parse user data with null checks
+        String userDataString = CommonUtilities.getPreference(EditProfileActivity.this, CommonUtilities.pref_UserData);
+        Log.d("EditProfileActivity", "User data string: " + (userDataString != null ? userDataString : "null"));
+        
+        // Also check user ID
+        String userId = CommonUtilities.getPreference(EditProfileActivity.this, CommonUtilities.pref_UserId);
+        Log.d("EditProfileActivity", "User ID: " + (userId != null ? userId : "null"));
+        
+        if (userDataString != null && !userDataString.isEmpty()) {
+            try {
+                // Check if this is email/password login data by looking for ResponseInfo structure
+                if (userDataString.contains("ResponseInfo") && userDataString.contains("end_first_name")) {
+                    Log.d("EditProfileActivity", "Detected email/password login data, using UserLoginResponse");
+                    // This is email/password login data, use UserLoginResponse
+                    Gson gson = new Gson();
+                    userLoginModel = gson.fromJson(userDataString, UserLoginResponse.class);
+                    Log.d("EditProfileActivity", "UserLoginResponse parsing result: " + (userLoginModel != null ? "success" : "failed"));
+                    
+                    if (userLoginModel != null && userLoginModel.response != null && userLoginModel.response.responseInfo != null && userLoginModel.response.responseInfo.data != null) {
+                        Log.d("EditProfileActivity", "UserLoginResponse data - First Name: " + userLoginModel.response.responseInfo.data.end_first_name);
+                        Log.d("EditProfileActivity", "UserLoginResponse data - Last Name: " + userLoginModel.response.responseInfo.data.end_last_name);
+                        Log.d("EditProfileActivity", "UserLoginResponse data - Email: " + userLoginModel.response.responseInfo.data.end_email);
+                    } else {
+                        Log.d("EditProfileActivity", "UserLoginResponse data structure is null");
+                    }
+                } else {
+                    Log.d("EditProfileActivity", "Detected Facebook login data, using SignUpModel");
+                    // This is Facebook login data, use SignUpModel
+                    model = new SignUpModel().SignUpModel(userDataString);
+                    Log.d("EditProfileActivity", "SignUpModel parsing result: " + (model != null ? "success" : "failed"));
+                }
+            } catch (Exception e) {
+                Log.e("EditProfileActivity", "Error parsing user data: " + e.getMessage());
+                e.printStackTrace();
+                // Handle parsing errors gracefully
+                model = null;
+                userLoginModel = null;
+            }
+        } else {
+            Log.d("EditProfileActivity", "User data string is null or empty");
+            model = null;
+            userLoginModel = null;
+        }
 
-        input_firstname.setText(model.response.user_data.fname);
-
-        input_firstname.setSelection(input_firstname.getText().length());
-
-        input_lastname.setText(model.response.user_data.lname);
-
-        input_email.setText(model.response.user_data.email);
+        // Safely set user data with null checks
+        if (model != null && model.response != null && model.response.user_data != null) {
+            // Handle SignUpModel data (Facebook login)
+            Log.d("EditProfileActivity", "Using SignUpModel data");
+            if (model.response.user_data.fname != null) {
+                input_firstname.setText(model.response.user_data.fname);
+                input_firstname.setSelection(input_firstname.getText().length());
+                Log.d("EditProfileActivity", "Set first name from SignUpModel: " + model.response.user_data.fname);
+            }
+            if (model.response.user_data.lname != null) {
+                input_lastname.setText(model.response.user_data.lname);
+                Log.d("EditProfileActivity", "Set last name from SignUpModel: " + model.response.user_data.lname);
+            }
+            if (model.response.user_data.email != null) {
+                input_email.setText(model.response.user_data.email);
+                Log.d("EditProfileActivity", "Set email from SignUpModel: " + model.response.user_data.email);
+            }
+        } else if (userLoginModel != null && userLoginModel.response != null && userLoginModel.response.responseInfo != null && userLoginModel.response.responseInfo.data != null) {
+            // Handle UserLoginResponse data (email/password login)
+            Log.d("EditProfileActivity", "Using UserLoginResponse data");
+            if (userLoginModel.response.responseInfo.data.end_first_name != null) {
+                input_firstname.setText(userLoginModel.response.responseInfo.data.end_first_name);
+                input_firstname.setSelection(input_firstname.getText().length());
+                Log.d("EditProfileActivity", "Set first name from UserLoginResponse: " + userLoginModel.response.responseInfo.data.end_first_name);
+            }
+            if (userLoginModel.response.responseInfo.data.end_last_name != null) {
+                input_lastname.setText(userLoginModel.response.responseInfo.data.end_last_name);
+                Log.d("EditProfileActivity", "Set last name from UserLoginResponse: " + userLoginModel.response.responseInfo.data.end_last_name);
+            }
+            if (userLoginModel.response.responseInfo.data.end_email != null) {
+                input_email.setText(userLoginModel.response.responseInfo.data.end_email);
+                Log.d("EditProfileActivity", "Set email from UserLoginResponse: " + userLoginModel.response.responseInfo.data.end_email);
+            }
+        } else {
+            // Fallback when both models are null
+            Log.d("EditProfileActivity", "Both models are null, clearing fields");
+            input_firstname.setText("");
+            input_lastname.setText("");
+            input_email.setText("");
+        }
 
 
         CommonUtilities.setAsteric(EditProfileActivity.this, "First Name", txtfirstname_static);
@@ -195,25 +273,58 @@ public class EditProfileActivity extends AppCompatActivity {
                 input_mobile_no.setText("+" + cc_code + mob);
             }
         } else {
-            if (!model.response.user_data.getMobile().equals("") && model.response.user_data.getMobile().length() > 6) {
-                String main = model.response.user_data.getMobile();
-                String firstthree = main.substring(0, 3);
-                String secthree = main.substring(3, 6);
-                String lastfour = main.substring(6, model.response.user_data.getMobile().length());
-                input_mobile_no.setText("+" + model.response.user_data.getCc_code() + " " + firstthree + " " + secthree + " " + lastfour);
-            } else
-                input_mobile_no.setText("+" + model.response.user_data.getCc_code() + " " + model.response.user_data.getMobile());
+            // Safely handle mobile number from user data
+            String mobile = "";
+            String ccCode = "";
+            
+            if (model != null && model.response != null && model.response.user_data != null) {
+                // Handle SignUpModel data (Facebook login)
+                mobile = model.response.user_data.getMobile() != null ? model.response.user_data.getMobile() : "";
+                ccCode = model.response.user_data.getCc_code() != null ? model.response.user_data.getCc_code() : "";
+            } else if (userLoginModel != null && userLoginModel.response != null && userLoginModel.response.responseInfo != null && userLoginModel.response.responseInfo.data != null) {
+                // Handle UserLoginResponse data (email/password login)
+                mobile = userLoginModel.response.responseInfo.data.mobile_no != null ? userLoginModel.response.responseInfo.data.mobile_no : "";
+               // ccCode = userLoginModel.response.responseInfo.data.cc_code != null ? userLoginModel.response.responseInfo.data.cc_code : "";
+            }
+            
+            if (!mobile.equals("") && mobile.length() > 6) {
+                String firstthree = mobile.substring(0, 3);
+                String secthree = mobile.substring(3, 6);
+                String lastfour = mobile.substring(6, mobile.length());
+                input_mobile_no.setText("+" + ccCode + " " + firstthree + " " + secthree + " " + lastfour);
+            } else if (!mobile.equals("")) {
+                input_mobile_no.setText("+" + ccCode + " " + mobile);
+            } else {
+                input_mobile_no.setText("");
+            }
         }
 
 
-        if (model.response.user_data.photo.equals("")) {
+        // Safely handle profile image
+        String profilePhoto = "";
+        String firstName = "";
+        
+        if (model != null && model.response != null && model.response.user_data != null) {
+            // Handle SignUpModel data (Facebook login)
+            profilePhoto = model.response.user_data.photo != null ? model.response.user_data.photo : "";
+            firstName = model.response.user_data.getFname() != null ? model.response.user_data.getFname() : "";
+        } else if (userLoginModel != null && userLoginModel.response != null && userLoginModel.response.responseInfo != null && userLoginModel.response.responseInfo.data != null) {
+            // Handle UserLoginResponse data (email/password login)
+            profilePhoto = userLoginModel.response.responseInfo.data.end_profile_pic != null ? userLoginModel.response.responseInfo.data.end_profile_pic : "";
+            firstName = userLoginModel.response.responseInfo.data.end_first_name != null ? userLoginModel.response.responseInfo.data.end_first_name : "";
+        }
+        
+        if (profilePhoto.equals("")) {
             image_layout.setBackgroundResource(R.drawable.round);
-            First_Lett.setText(model.response.user_data.getFname().substring(0, 1));
+            if (!firstName.equals("") && firstName.length() > 0) {
+                First_Lett.setText(firstName.substring(0, 1));
+            } else {
+                First_Lett.setText("U");
+            }
         } else {
 //            changed on 28-jan-2019
             Picasso.get()
-                    .load(CommonUtilities.Gr8niteoutURL + CommonUtilities.User_Profile_URL +
-                            model.response.user_data.photo)
+                    .load(CommonUtilities.Gr8niteoutURL + CommonUtilities.User_Profile_URL + profilePhoto)
                     .transform(new CircleTransform())
                     .error(R.mipmap.user).placeholder(R.mipmap.user) // optional
                     .into(imgProfile, new Callback() {
@@ -234,6 +345,7 @@ public class EditProfileActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
 
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (grantResults.length > 1 && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
 
             scanLicence();
@@ -557,7 +669,16 @@ public class EditProfileActivity extends AppCompatActivity {
 
     public void onSave() {
         Map<String, String> params = new HashMap<String, String>();
-        params.put(CommonUtilities.key_user_id, model.response.user_data.user_id);
+        
+        // Safely get user ID from user data
+        String userId = "";
+        if (model != null && model.response != null && model.response.user_data != null) {
+            userId = model.response.user_data.user_id != null ? model.response.user_data.user_id : "";
+        } else if (userLoginModel != null && userLoginModel.response != null && userLoginModel.response.responseInfo != null && userLoginModel.response.responseInfo.data != null) {
+            userId = userLoginModel.response.responseInfo.data.user_id != null ? userLoginModel.response.responseInfo.data.user_id : "";
+        }
+        
+        params.put(CommonUtilities.key_user_id, userId);
         params.put(CommonUtilities.pref_fb_fname, input_firstname.getText().toString());
         params.put(CommonUtilities.pref_fb_lname, input_lastname.getText().toString());
         params.put(CommonUtilities.pref_fb_photo, prof_img);
@@ -571,8 +692,22 @@ public class EditProfileActivity extends AppCompatActivity {
             params.put(CommonUtilities.pref_fb_mobile, mob);
             params.put(CommonUtilities.key_cc_code, cc_code);
         } else {
-            params.put(CommonUtilities.pref_fb_mobile, model.response.user_data.getMobile());
-            params.put(CommonUtilities.key_cc_code, model.response.user_data.getCc_code());
+            // Safely handle mobile number from user data
+            String mobile = "";
+            String ccCode = "";
+            
+            if (model != null && model.response != null && model.response.user_data != null) {
+                // Handle SignUpModel data (Facebook login)
+                mobile = model.response.user_data.getMobile() != null ? model.response.user_data.getMobile() : "";
+                ccCode = model.response.user_data.getCc_code() != null ? model.response.user_data.getCc_code() : "";
+            } else if (userLoginModel != null && userLoginModel.response != null && userLoginModel.response.responseInfo != null && userLoginModel.response.responseInfo.data != null) {
+                // Handle UserLoginResponse data (email/password login) - mobile not available, keep empty
+                mobile = "";
+                ccCode = "";
+            }
+            
+            params.put(CommonUtilities.pref_fb_mobile, mobile);
+            params.put(CommonUtilities.key_cc_code, ccCode);
         }
         params.put(CommonUtilities.pref_fb_email, input_email.getText().toString());
 //        params.put(CommonUtilities.pref_fb_email, "");
@@ -584,18 +719,29 @@ public class EditProfileActivity extends AppCompatActivity {
                 if (model2 != null) {
                     if (model2.response.status.equals(CommonUtilities.key_Success)) {
 
-                        model.response.user_data.setFname(input_firstname.getText().toString());
-                        model.response.user_data.setLname(input_lastname.getText().toString());
-                        model.response.user_data.setMobile(model2.response.profile_status.getMobile());
-                        model.response.user_data.setCc_code(model2.response.profile_status.getCc_code());
-//                        model.response.user_data.setEmail("");
-                        model.response.user_data.setEmail(input_email.getText().toString());
-                        if (!prof_img.equals("")) {
-                            model.response.user_data.setPhoto(model2.response.profile_status.getPhoto());
-//                            model.response.user_data.setPhoto("");
+                        // Update the appropriate model based on which one is available
+                        if (model != null && model.response != null && model.response.user_data != null) {
+                            // Handle SignUpModel data (Facebook login)
+                            model.response.user_data.setFname(input_firstname.getText().toString());
+                            model.response.user_data.setLname(input_lastname.getText().toString());
+                            model.response.user_data.setMobile(model2.response.profile_status.getMobile());
+                            model.response.user_data.setCc_code(model2.response.profile_status.getCc_code());
+                            model.response.user_data.setEmail(input_email.getText().toString());
+                            if (!prof_img.equals("")) {
+                                model.response.user_data.setPhoto(model2.response.profile_status.getPhoto());
+                            }
+                            CommonUtilities.setPreference(EditProfileActivity.this, CommonUtilities.pref_UserData, new Gson().toJson(model));
+                        } else if (userLoginModel != null && userLoginModel.response != null && userLoginModel.response.responseInfo != null && userLoginModel.response.responseInfo.data != null) {
+                            // Handle UserLoginResponse data (email/password login)
+                            userLoginModel.response.responseInfo.data.end_first_name = input_firstname.getText().toString();
+                            userLoginModel.response.responseInfo.data.end_last_name = input_lastname.getText().toString();
+                            userLoginModel.response.responseInfo.data.end_email = input_email.getText().toString();
+                            if (!prof_img.equals("")) {
+                                userLoginModel.response.responseInfo.data.end_profile_pic = model2.response.profile_status.getPhoto();
+                            }
+                            CommonUtilities.setPreference(EditProfileActivity.this, CommonUtilities.pref_UserData, new Gson().toJson(userLoginModel));
                         }
 
-                        CommonUtilities.setPreference(EditProfileActivity.this, CommonUtilities.pref_UserData, new Gson().toJson(model));
                         CommonUtilities.ShowToast(EditProfileActivity.this, "Your profile is now up to date");
                         finish();
                     } else {
@@ -617,17 +763,17 @@ public class EditProfileActivity extends AppCompatActivity {
 
     public void setFont() {
 
-        CommonUtilities.setFontFamily(EditProfileActivity.this, txtEditProfile, CommonUtilities.AvenirLTStd_Medium);
-        CommonUtilities.setFontFamily(EditProfileActivity.this, txtSave, CommonUtilities.Avenir_Heavy);
-        CommonUtilities.setFontFamily(EditProfileActivity.this, txtEditPhoto, CommonUtilities.Avenir_Heavy);
-        CommonUtilities.setFontFamily(EditProfileActivity.this, txtMobile_static, CommonUtilities.AvenirLTStd_Medium);
-        CommonUtilities.setFontFamily(EditProfileActivity.this, txtEmail_static, CommonUtilities.AvenirLTStd_Medium);
-        CommonUtilities.setFontFamily(EditProfileActivity.this, txtfirstname_static, CommonUtilities.AvenirLTStd_Medium);
-        CommonUtilities.setFontFamily(EditProfileActivity.this, txtsecname_static, CommonUtilities.AvenirLTStd_Medium);
-        CommonUtilities.setFontFamily(EditProfileActivity.this, input_firstname, CommonUtilities.Avenir_Heavy);
-        CommonUtilities.setFontFamily(EditProfileActivity.this, input_lastname, CommonUtilities.Avenir_Heavy);
-        CommonUtilities.setFontFamily(EditProfileActivity.this, input_mobile_no, CommonUtilities.Avenir_Heavy);
-        CommonUtilities.setFontFamily(EditProfileActivity.this, input_email, CommonUtilities.Avenir_Heavy);
+        if (txtEditProfile != null) CommonUtilities.setFontFamily(EditProfileActivity.this, txtEditProfile, CommonUtilities.AvenirLTStd_Medium);
+        if (txtSave != null) CommonUtilities.setFontFamily(EditProfileActivity.this, txtSave, CommonUtilities.Avenir_Heavy);
+        if (txtEditPhoto != null) CommonUtilities.setFontFamily(EditProfileActivity.this, txtEditPhoto, CommonUtilities.Avenir_Heavy);
+        if (txtMobile_static != null) CommonUtilities.setFontFamily(EditProfileActivity.this, txtMobile_static, CommonUtilities.AvenirLTStd_Medium);
+        if (txtEmail_static != null) CommonUtilities.setFontFamily(EditProfileActivity.this, txtEmail_static, CommonUtilities.AvenirLTStd_Medium);
+        if (txtfirstname_static != null) CommonUtilities.setFontFamily(EditProfileActivity.this, txtfirstname_static, CommonUtilities.AvenirLTStd_Medium);
+        if (txtsecname_static != null) CommonUtilities.setFontFamily(EditProfileActivity.this, txtsecname_static, CommonUtilities.AvenirLTStd_Medium);
+        if (input_firstname != null) CommonUtilities.setFontFamily(EditProfileActivity.this, input_firstname, CommonUtilities.Avenir_Heavy);
+        if (input_lastname != null) CommonUtilities.setFontFamily(EditProfileActivity.this, input_lastname, CommonUtilities.Avenir_Heavy);
+        if (input_mobile_no != null) CommonUtilities.setFontFamily(EditProfileActivity.this, input_mobile_no, CommonUtilities.Avenir_Heavy);
+        if (input_email != null) CommonUtilities.setFontFamily(EditProfileActivity.this, input_email, CommonUtilities.Avenir_Heavy);
     }
 
 
