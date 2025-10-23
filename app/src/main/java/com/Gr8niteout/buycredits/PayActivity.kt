@@ -73,15 +73,15 @@ class PayActivity : AppCompatActivity() {
     }
     private fun setUpStripe(){
         paymentIntentClientSecret = intent.getStringExtra(CommonUtilities.clientSecretIntentKey) ?: ""
-        Log.d("PayActivity", "paymentIntentClientSecret : $paymentIntentClientSecret")
-        Log.d("PayActivity", "Using Stripe Test Key: ${BuildConfig.STRIPE_PUBLISHABLE_KEY}")
+        Log.d("PayActivityTrack", "paymentIntentClientSecret : $paymentIntentClientSecret")
+        Log.d("PayActivityTrack", "Using Stripe Test Key: ${BuildConfig.STRIPE_PUBLISHABLE_KEY}")
         stripe = Stripe(applicationContext, BuildConfig.STRIPE_PUBLISHABLE_KEY)
         
         // Log test mode configuration
         if (BuildConfig.STRIPE_PUBLISHABLE_KEY.startsWith("pk_test_")) {
-            Log.d("PayActivity", "✅ Stripe Test Mode Enabled - Safe for Pakistan Testing")
+            Log.d("PayActivityTrack", "✅ Stripe Test Mode Enabled - Safe for Pakistan Testing")
         } else {
-            Log.w("PayActivity", "⚠️ Warning: Not using test keys - make sure this is intended!")
+            Log.w("PayActivityTrack", "⚠️ Warning: Not using test keys - make sure this is intended!")
         }
     }
 
@@ -217,7 +217,7 @@ class PayActivity : AppCompatActivity() {
             true,
             object : VolleyCallback {
                 override fun onSuccess(result: String) {
-                    Log.d("PayActivity", "Stripe API Response: $result")
+                    Log.d("PayActivityTrack", "Stripe API Response: $result")
                     val stripeUserModel:StripeUserModel = StripeUserModel().StripeUserModel(result)
                     if (stripeUserModel.code == CommonUtilities.key_success_code) {
                         val intent = Intent(
@@ -238,7 +238,7 @@ class PayActivity : AppCompatActivity() {
                 }
 
                 override fun onError(error: String) {
-                    Log.e("PayActivity", "Network Error: $error")
+                    Log.e("PayActivityTrack", "Network Error: $error")
                     CommonUtilities.ShowToast(this@PayActivity, "Network Error: $error")
                 }
             })
@@ -272,7 +272,7 @@ class PayActivity : AppCompatActivity() {
         }
         
         // Log detailed error for debugging
-        Log.e("PayActivity", "Detailed Error: $errorMessage")
+        Log.e("PayActivityTrack", "Detailed Error: $errorMessage")
         
         // Show detailed error in debug mode, simple error in release mode
         if (BuildConfig.DEBUG) {
@@ -325,7 +325,7 @@ class PayActivity : AppCompatActivity() {
                 } else if (status == StripeIntent.Status.RequiresPaymentMethod) {
                     displayAlert(weakActivity.get(), "Payment failed", paymentIntent.lastPaymentError?.message
                             ?: "")
-                    Log.d("PayActivity", "" + paymentIntent.lastPaymentError?.message)
+                    Log.d("PayActivityTrack", "" + paymentIntent.lastPaymentError?.message)
                 }
             }
 
@@ -333,7 +333,7 @@ class PayActivity : AppCompatActivity() {
                 controlPayBtnState(false)
                 displayAlert(weakActivity.get(), "Payment failed", e.toString())
                 e.printStackTrace()
-                Log.d("PayActivity", "onError: $e")
+                Log.d("PayActivityTrack", "onError: $e")
             }
         })
     }
